@@ -14,8 +14,12 @@
 
 .list_item {
   list-style-type: none;
+} 
+
+.link {
   display: flex;
   align-items: center;
+  text-decoration: none;
 }
 
 .list_item:last-child {

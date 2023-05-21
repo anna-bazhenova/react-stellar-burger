@@ -10,16 +10,22 @@ function AppHeader() {
       <nav className={styles.navigation_block}>
         <ul className={styles.list}>
           <li className={`${styles.list_item} p-5 mr-2`}>
-            <BurgerIcon type="primary" />
-            <p className={`${styles.text} pl-2`}>Конструктор</p>
+            <a href="#" className={styles.link}>
+              <BurgerIcon type="primary" />
+              <p className={`${styles.text} text_color_primary pl-2`}>Конструктор</p>
+            </a>
           </li>
           <li className={`${styles.list_item} p-5`}>
-            <ListIcon type="secondary" />
-            <p className={`${styles.text} text_color_inactive pl-2`}>Лента заказов</p>
+            <a href="#" className={styles.link}>
+              <ListIcon type="secondary" />
+              <p className={`${styles.text} text_color_inactive pl-2`}>Лента заказов</p>
+            </a>
           </li>
           <li className={`${styles.list_item} p-5`}>
-            <ProfileIcon type="secondary" />
-            <p className={`${styles.text} text_color_inactive pl-2`}>Личный кабинет</p>
+            <a href="#" className={styles.link}>
+              <ProfileIcon type="secondary" />
+              <p className={`${styles.text} text_color_inactive pl-2`}>Личный кабинет</p>
+            </a>
           </li>
         </ul>
       </nav>
