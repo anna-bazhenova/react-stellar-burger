@@ -1,0 +1,17 @@
+.list_item {
+  list-style-type: none;
+  text-align: center;
+  position: relative;
+}
+
+.image {
+  display: block;
+  margin: 0 auto;
+}
+
+.container_price {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  column-gap: 9px;
+}
