@@ -1,0 +1,35 @@
+.mains_list {
+  height: calc(100vh - 510px);
+  overflow-y: scroll;
+  list-style-type: none;
+  padding: 0;
+}
+
+.mains_list_item {
+  margin-bottom: 16px;
+  display: flex;
+  align-items: center;
+  column-gap: 8px;
+}
+
+.mains_list_item:last-child {
+  margin-bottom: 0;
+}
+
+.burger_list {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+
+.order_container {
+  display: flex;
+  justify-content: flex-end;
+  column-gap: 40px;
+}
+
+.sum_container {
+  display: flex;
+  align-items: center;
+  column-gap: 9px;
+}
