@@ -1,12 +1,18 @@
 import { ConstructorElement, DragIcon, Button, CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from "./burger-constructor.module.css";
 import { data } from "./data";
+import { useState } from "react";
+import Modal from "../modal/modal";
 
 function BurgerConstructor() {
+
+  const [showOrderDetails, setShowOrderDetails] = useState(false);
+
   const totalSum = data.bun.price + data.ingredients.reduce(
     (acc, current) => acc + current.price,
     0
   );
+  
   return (
     <section>
       <ul style={{ display: "flex", flexDirection: "column", gap: "16px" }} className={styles.burger_list}>
@@ -48,9 +54,13 @@ function BurgerConstructor() {
           <p className="text text_type_digits-medium">{totalSum}</p>
           <CurrencyIcon type="primary" />
         </div>
-        <Button htmlType="button" type="primary" size="large">
+        <Button htmlType="button" type="primary" size="large" onClick={() => setShowOrderDetails(true)}>
           Оформить заказ
         </Button>
+        { showOrderDetails && (
+            <Modal header={"Детали заказа"} onClose={() => setShowOrderDetails(false)}/>
+          )
+        }
       </div>
     </section>
   );
