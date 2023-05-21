@@ -4,7 +4,7 @@ import styles from "./burger-ingredient.module.css";
 function BurgerIngredient({image, price, name}) {
   return (
     <li className={styles.list_item}>
-      <img className={styles.image} src={image} alt="" />
+      <img className={styles.image} src={image} alt={name} />
       <div className={`${styles.container_price} mt-1 mb-1`}>
         <p className="text text_type_digits-default">{price}</p>
         <CurrencyIcon type="primary" />

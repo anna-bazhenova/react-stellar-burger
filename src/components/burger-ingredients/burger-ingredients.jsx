@@ -12,7 +12,7 @@ function BurgerIngredients() {
   const mains = data.filter((ingredient) => ingredient.type === 'main');
 
   return (
-    <div>
+    <section>
       <div style={{ display: 'flex' }}>
         <Tab value="bun" active={tab === 'bun'} onClick={setActive}>
           Булки
@@ -44,7 +44,7 @@ function BurgerIngredients() {
           ))}
         </ul>
       </div>
-    </div>
+    </section>
   );
 }
 

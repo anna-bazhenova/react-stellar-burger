@@ -10,13 +10,9 @@ function App() {
       <AppHeader/>
       <main className={styles.content}>
         <h1 className="text text_type_main-large mt-10 mb-5">Соберите бургер</h1>
-        <div className={styles.sections}>
-          <section>
-            <BurgerIngredients/>
-          </section>
-          <section>
-            <BurgerConstructor/>
-          </section>
+        <div className={styles.sections_container}>
+          <BurgerIngredients/>
+          <BurgerConstructor/>
         </div>
       </main>
     </div>
