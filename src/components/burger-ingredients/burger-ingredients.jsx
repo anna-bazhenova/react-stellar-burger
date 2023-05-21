@@ -28,19 +28,19 @@ function BurgerIngredients() {
         <h2 className="text text_type_main-medium">Булки</h2>
         <ul className={`${styles.list} pt-6 pl-4 pr-4`}>
           {buns.map((bun) => (
-            <BurgerIngredient image={bun.image} price={bun.price} name={bun.name}/>
+            <BurgerIngredient ingredient={bun}/>
           ))}
         </ul>
         <h2 className="text text_type_main-medium mt-10">Соусы</h2>
         <ul className={`${styles.list} pt-6 pl-4 pr-4`}>
           {sauces.map((sauce) => (
-            <BurgerIngredient image={sauce.image} price={sauce.price} name={sauce.name}/>
+            <BurgerIngredient ingredient={sauce}/>
           ))}
         </ul>
         <h2 className="text text_type_main-medium mt-10">Начинки</h2>
         <ul className={`${styles.list} pt-6 pl-4 pr-4`}>
           {mains.map((main) => (
-            <BurgerIngredient image={main.image} price={main.price} name={main.name}/>
+            <BurgerIngredient ingredient={main}/>
           ))}
         </ul>
       </div>

@@ -2,6 +2,7 @@
   list-style-type: none;
   text-align: center;
   position: relative;
+  cursor: pointer;
 }
 
 .image {

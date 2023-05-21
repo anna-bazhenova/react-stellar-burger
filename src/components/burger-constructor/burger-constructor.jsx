@@ -3,6 +3,7 @@ import styles from "./burger-constructor.module.css";
 import { data } from "./data";
 import { useState } from "react";
 import Modal from "../modal/modal";
+import OrderDetails from "../order-details/order-details";
 
 function BurgerConstructor() {
 
@@ -58,7 +59,9 @@ function BurgerConstructor() {
           Оформить заказ
         </Button>
         { showOrderDetails && (
-            <Modal header={"Детали заказа"} onClose={() => setShowOrderDetails(false)}/>
+            <Modal header={""} onClose={() => setShowOrderDetails(false)}>
+              <OrderDetails orderId={123456}/>
+            </Modal>
           )
         }
       </div>
