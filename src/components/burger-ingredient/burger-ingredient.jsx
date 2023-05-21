@@ -6,7 +6,7 @@ import IngredientDetails from "../ingredient-details/ingredient-details";
 
 function BurgerIngredient({ingredient}) {
   const [showIngredient, setShowIngredient] = useState(false);
-  const {image, price, name, ...rest} = ingredient
+  const {_id, image, price, name} = ingredient
   return (
     <>
       <li className={styles.list_item} onClick={() => setShowIngredient(true)}>

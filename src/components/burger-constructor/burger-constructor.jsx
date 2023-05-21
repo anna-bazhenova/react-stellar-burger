@@ -29,7 +29,7 @@ function BurgerConstructor() {
         <li>
           <ul className={`${styles.mains_list} custom-scroll`}>
             {data.ingredients.map((ingredient) => (
-              <li className={styles.mains_list_item}>
+              <li className={styles.mains_list_item} key={ingredient._id}>
                 <DragIcon type="primary" />
                 <ConstructorElement
                   text={ingredient.name}

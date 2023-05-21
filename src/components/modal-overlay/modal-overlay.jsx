@@ -1,8 +1,8 @@
 import styles from "./modal-overlay.module.css";
 
-function ModalOverlay({children}) {
+function ModalOverlay({ children, onClick }) {
   return (
-    <div className={styles.overlay}>
+    <div className={styles.overlay} onClick={onClick}>
       {children}
     </div>
   );
