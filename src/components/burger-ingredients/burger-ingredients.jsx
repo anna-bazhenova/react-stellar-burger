@@ -2,14 +2,15 @@ import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
 import BurgerIngredient from "../burger-ingredient/burger-ingredient";
 import styles from "./burger-ingredients.module.css";
 import { useState } from "react";
-import { data } from "../../utils/data";
+import { ingredientPropType } from "../../utils/prop-types";
+import PropTypes from "prop-types";
 
-function BurgerIngredients() {
+function BurgerIngredients({ingredients}) {
   const [tab, setActive] = useState('bun');
   
-  const buns = data.filter((ingredient) => ingredient.type === 'bun');
-  const sauces = data.filter((ingredient) => ingredient.type === 'sauce');
-  const mains = data.filter((ingredient) => ingredient.type === 'main');
+  const buns = ingredients.filter((ingredient) => ingredient.type === 'bun');
+  const sauces = ingredients.filter((ingredient) => ingredient.type === 'sauce');
+  const mains = ingredients.filter((ingredient) => ingredient.type === 'main');
 
   return (
     <section>
@@ -47,5 +48,9 @@ function BurgerIngredients() {
     </section>
   );
 }
+
+BurgerIngredients.propTypes = {
+  ingredients: PropTypes.arrayOf(ingredientPropType)
+};
 
 export default BurgerIngredients;

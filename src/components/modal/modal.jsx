@@ -3,6 +3,7 @@ import styles from "./modal.module.css";
 import { createPortal } from "react-dom";
 import ModalOverlay from "../modal-overlay/modal-overlay";
 import { useEffect } from "react";
+import PropTypes from "prop-types";
 
 const modalsRoot = document.getElementById('modals');
 
@@ -41,6 +42,11 @@ function Modal({ children, header, onClose }) {
     </ModalOverlay>,
     modalsRoot
   );
+}
+
+Modal.propTypes = {
+  header: PropTypes.string.isRequired,
+  onClose: PropTypes.func.isRequired
 }
 
 export default Modal;

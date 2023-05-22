@@ -3,10 +3,11 @@ import styles from "./burger-ingredient.module.css";
 import { useState } from "react";
 import Modal from "../modal/modal";
 import IngredientDetails from "../ingredient-details/ingredient-details";
+import { ingredientPropType } from "../../utils/prop-types";
 
 function BurgerIngredient({ingredient}) {
   const [showIngredient, setShowIngredient] = useState(false);
-  const {_id, image, price, name} = ingredient
+  const {image, price, name} = ingredient
   return (
     <>
       <li className={styles.list_item} onClick={() => setShowIngredient(true)}>
@@ -28,5 +29,9 @@ function BurgerIngredient({ingredient}) {
     </>
   );
 }
+
+BurgerIngredient.propTypes = {
+  ingredient: ingredientPropType.isRequired
+};
 
 export default BurgerIngredient;
