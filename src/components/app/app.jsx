@@ -10,10 +10,19 @@ function App() {
   
   useEffect(() => {
     const getIngredients = async () => {
-      const response = await fetch("https://norma.nomoreparties.space/api/ingredients");
-      const ingredients = await response.json()
+      const ingredients = await fetch("https://norma.nomoreparties.space/api/ingredients")
+        .then((res) => {
+          if (res.ok) {
+            return res.json();
+          }
+          return Promise.reject(`Ошибка ${res.status}`);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+      
       setIngredients(ingredients.data);
-    }
+    };
     getIngredients();
   }, []);
   
