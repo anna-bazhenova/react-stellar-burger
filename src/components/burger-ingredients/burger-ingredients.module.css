@@ -1,0 +1,20 @@
+.list {
+  display: grid;
+  column-gap: 24px;
+  row-gap: 32px;
+  margin: 0;
+  grid-template-columns: 272px 2fr;
+}
+
+.title_section {
+  margin: 0;
+}
+
+.burger_ingredients {
+  overflow-y: scroll;
+  height: calc(100vh - 320px);
+}
+
+.tab_block {
+  display: flex;
+}
