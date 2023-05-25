@@ -6,6 +6,7 @@
   position: relative;
   min-width: 720px;
   text-align: center;
+  cursor: default;
 }
 
 .button_close {

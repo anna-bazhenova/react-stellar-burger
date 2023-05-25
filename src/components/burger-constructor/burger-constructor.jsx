@@ -16,7 +16,7 @@ function BurgerConstructor() {
   
   return (
     <section>
-      <ul style={{ display: "flex", flexDirection: "column", gap: "16px" }} className={styles.burger_list}>
+      <ul className={styles.burger_list}>
         <li className="ml-8">
           <ConstructorElement
             type="top"

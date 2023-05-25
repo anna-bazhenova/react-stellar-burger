@@ -14,7 +14,7 @@ function BurgerIngredients({ingredients}) {
 
   return (
     <section>
-      <div style={{ display: 'flex' }}>
+      <div className={styles.tab_block}>
         <Tab value="bun" active={tab === 'bun'} onClick={setActive}>
           Булки
         </Tab>
