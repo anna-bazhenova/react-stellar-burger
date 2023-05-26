@@ -4,24 +4,44 @@ import styles from "./burger-ingredients.module.css";
 import { useState } from "react";
 import { ingredientPropType } from "../../utils/prop-types";
 import PropTypes from "prop-types";
+import { useDispatch, useSelector } from "react-redux";
+import { useModal } from "../../hooks/useModal";
+import { hideIngredientDetails, showIngredientDetails } from "../../services/actions/ingredient-details";
+import Modal from "../modal/modal";
+import IngredientDetails from "../ingredient-details/ingredient-details";
 
 function BurgerIngredients({ingredients}) {
-  const [tab, setActive] = useState('bun');
+  const [tab, setTab] = useState('bun');
+  
+  const selectedIngredient = useSelector(state => state.selectedIngredient);
+  const dispatch = useDispatch();
+
+  const { isModalOpen, openModal, closeModal } = useModal();
   
   const buns = ingredients.filter((ingredient) => ingredient.type === 'bun');
   const sauces = ingredients.filter((ingredient) => ingredient.type === 'sauce');
   const mains = ingredients.filter((ingredient) => ingredient.type === 'main');
 
+  const showDetails = (ingredient) => {
+    dispatch(showIngredientDetails(ingredient));
+    openModal();
+  }
+
+  const hideDetails = () => {
+    dispatch(hideIngredientDetails());
+    closeModal();
+  }
+
   return (
     <section>
       <div className={styles.tab_block}>
-        <Tab value="bun" active={tab === 'bun'} onClick={setActive}>
+        <Tab value="bun" active={tab === 'bun'} onClick={setTab}>
           Булки
         </Tab>
-        <Tab value="sauce" active={tab === 'sauce'} onClick={setActive}>
+        <Tab value="sauce" active={tab === 'sauce'} onClick={setTab}>
           Соусы
         </Tab>
-        <Tab value="main" active={tab === 'main'} onClick={setActive}>
+        <Tab value="main" active={tab === 'main'} onClick={setTab}>
           Начинки
         </Tab>
       </div>
@@ -29,22 +49,29 @@ function BurgerIngredients({ingredients}) {
         <h2 className="text text_type_main-medium">Булки</h2>
         <ul className={`${styles.list} pt-6 pl-4 pr-4`}>
           {buns.map((bun) => (
-            <BurgerIngredient ingredient={bun} key={bun._id}/>
+            <BurgerIngredient key={bun._id} ingredient={bun} onClick={() => showDetails(bun)}/>
           ))}
         </ul>
         <h2 className="text text_type_main-medium mt-10">Соусы</h2>
         <ul className={`${styles.list} pt-6 pl-4 pr-4`}>
           {sauces.map((sauce) => (
-            <BurgerIngredient ingredient={sauce} key={sauce._id}/>
+            <BurgerIngredient key={sauce._id} ingredient={sauce} onClick={() => showDetails(sauce)}/>
           ))}
         </ul>
         <h2 className="text text_type_main-medium mt-10">Начинки</h2>
         <ul className={`${styles.list} pt-6 pl-4 pr-4`}>
           {mains.map((main) => (
-            <BurgerIngredient ingredient={main} key={main._id}/>
+            <BurgerIngredient key={main._id} ingredient={main} onClick={() => showDetails(main)}/>
           ))}
         </ul>
       </div>
+      {isModalOpen && 
+      <Modal
+        header={"Детали ингредиента"}
+        onClose={hideDetails}>
+        <IngredientDetails/>
+      </Modal>
+      }
     </section>
   );
 }

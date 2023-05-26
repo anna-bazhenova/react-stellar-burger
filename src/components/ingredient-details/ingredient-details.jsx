@@ -1,9 +1,12 @@
 import styles from "./ingredient-details.module.css";
 import { ingredientPropType } from "../../utils/prop-types";
+import { useSelector } from "react-redux";
 
-function IngredientDetails({ingredient}) {
-  const {name, image_large, calories, proteins, fat, carbohydrates, ...rest} = ingredient;
-  return (
+function IngredientDetails() {
+  const { name, image_large, calories, proteins, fat, carbohydrates, ...rest } =
+    useSelector((state) => state.selectedIngredient);
+  
+    return (
     <div>
       <img src={image_large} alt={name} />
       <h4 className="text text_type_main-medium mt-4 mb-8">{name}</h4>
