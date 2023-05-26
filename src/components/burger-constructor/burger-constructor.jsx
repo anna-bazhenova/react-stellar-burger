@@ -1,13 +1,27 @@
 import { ConstructorElement, DragIcon, Button, CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from "./burger-constructor.module.css";
 import { data } from "./data";
-import { useState } from "react";
 import Modal from "../modal/modal";
 import OrderDetails from "../order-details/order-details";
+import { useModal } from "../../hooks/useModal";
+import { useDispatch } from "react-redux";
+import { clearOrderId } from "../../services/actions/order-details";
 
 function BurgerConstructor() {
 
-  const [showOrderDetails, setShowOrderDetails] = useState(false);
+  const { isModalOpen, openModal, closeModal } = useModal();
+
+  const dispatch = useDispatch();
+
+  
+  const showOrderDetails = () => {
+    openModal();
+  }
+  
+  const hideOrderDetails = () => {
+    dispatch(clearOrderId())
+    closeModal();
+  }
 
   const totalSum = data.bun.price + data.ingredients.reduce(
     (acc, current) => acc + current.price,
@@ -55,11 +69,11 @@ function BurgerConstructor() {
           <p className="text text_type_digits-medium">{totalSum}</p>
           <CurrencyIcon type="primary" />
         </div>
-        <Button htmlType="button" type="primary" size="large" onClick={() => setShowOrderDetails(true)}>
+        <Button htmlType="button" type="primary" size="large" onClick={showOrderDetails}>
           Оформить заказ
         </Button>
-        { showOrderDetails && (
-            <Modal header={""} onClose={() => setShowOrderDetails(false)}>
+        { isModalOpen && (
+            <Modal header={""} onClose={hideOrderDetails}>
               <OrderDetails orderId={123456}/>
             </Modal>
           )

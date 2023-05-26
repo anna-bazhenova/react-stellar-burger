@@ -13,7 +13,6 @@ import IngredientDetails from "../ingredient-details/ingredient-details";
 function BurgerIngredients({ingredients}) {
   const [tab, setTab] = useState('bun');
   
-  const selectedIngredient = useSelector(state => state.selectedIngredient);
   const dispatch = useDispatch();
 
   const { isModalOpen, openModal, closeModal } = useModal();
