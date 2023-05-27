@@ -2,8 +2,18 @@ import { CurrencyIcon, Counter } from "@ya.praktikum/react-developer-burger-ui-c
 import styles from "./burger-ingredient.module.css";
 import { ingredientPropType } from "../../utils/prop-types";
 import { useDrag } from "react-dnd";
+import { useSelector } from "react-redux";
 
 function BurgerIngredient({ingredient, onClick}) {
+
+  const count = useSelector((store) => {
+    const burgerIngredients = store.burgerIngredients;
+    if (ingredient.type === "bun") {
+      return burgerIngredients.bun._id === ingredient._id ? 2 : 0;
+    }
+    return burgerIngredients.ingredients.filter((i) => i._id === ingredient._id).length;
+  });
+
   const [, dragRef] = useDrag(() => ({
     type: "BURGER_INGREDIENT",
     item: {id: ingredient._id},
@@ -20,7 +30,7 @@ function BurgerIngredient({ingredient, onClick}) {
           <CurrencyIcon type="primary" />
         </div>
         <p className="text text_type_main-default">{name}</p>
-        <Counter count={1} size="default" extraClass="m-1" />
+        <Counter count={count} size="default" extraClass="m-1" />
       </li>
     </>
   );

@@ -18,9 +18,6 @@ function BurgerConstructor() {
     };
   });
 
-  console.log("Available ingredients toplevel");
-  console.log(burgerIngredients);
-
   const { isModalOpen, openModal, closeModal } = useModal();
 
   const dispatch = useDispatch();
@@ -47,24 +44,29 @@ function BurgerConstructor() {
     [availableIngredients]
   );
 
-  let bun = burgerIngredients.find((ingredient) => ingredient.type === "bun");
-  if (!bun) {
-    bun = availableIngredients.find((ingredient) => ingredient.type === "bun");
-    if (bun) {
-      dispatch(addBurgerIngredient(bun));
+  
+  const resolveBun = (burgerIngredients) => {
+    let bun = burgerIngredients.bun;
+    if (Object.keys(bun).length === 0) {
+      bun = availableIngredients.find(
+        (ingredient) => ingredient.type === "bun"
+      );
+      if (bun) {
+        dispatch(addBurgerIngredient(bun));
+      }
     }
-  }
-
-  const otherIngredients = burgerIngredients.filter(ingredient => ingredient.type !== "bun")
+    return bun;
+  };
+  
+  const bun = resolveBun(burgerIngredients);
+  const otherIngredients = burgerIngredients.ingredients;
 
   const totalSum = useMemo(
     () =>
-      burgerIngredients.reduce(
-        (acc, ingredient) =>
-          acc +
-          (ingredient.type === "bun" ? ingredient.price * 2 : ingredient.price),
+      burgerIngredients.ingredients.reduce(
+        (acc, ingredient) => acc + ingredient.price,
         0
-      ),
+      ) + burgerIngredients.bun ? burgerIngredients.bun.price * 2 : 0,
     [burgerIngredients]
   );
   
