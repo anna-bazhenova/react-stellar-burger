@@ -60,7 +60,7 @@ function BurgerConstructor() {
       burgerIngredients.ingredients.reduce(
         (acc, ingredient) => acc + ingredient.price,
         0
-      ) + burgerIngredients.bun.price ? burgerIngredients.bun.price * 2 : 0,
+      ) + (burgerIngredients.bun.price ? burgerIngredients.bun.price * 2 : 0),
     [burgerIngredients]
   );
 
