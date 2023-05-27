@@ -9,6 +9,7 @@ import { useDrop } from "react-dnd";
 import { addBurgerIngredient, removeBurgedIngredient } from "../../services/actions/burger-constructor";
 import { useMemo } from "react";
 import { placeOrder } from "../../services/actions/api";
+import loaderImage from "../../images/circles.svg";
 
 function BurgerConstructor() {
 
@@ -50,22 +51,8 @@ function BurgerConstructor() {
     }),
     [availableIngredients]
   );
-
   
-  const resolveBun = (burgerIngredients) => {
-    let bun = burgerIngredients.bun;
-    if (Object.keys(bun).length === 0) {
-      bun = availableIngredients.find(
-        (ingredient) => ingredient.type === "bun"
-      );
-      if (bun) {
-        dispatch(addBurgerIngredient(bun));
-      }
-    }
-    return bun;
-  };
-  
-  const bun = resolveBun(burgerIngredients);
+  const bun = burgerIngredients.bun;
   const otherIngredients = burgerIngredients.ingredients;
 
   const totalSum = useMemo(
@@ -89,9 +76,9 @@ function BurgerConstructor() {
             <ConstructorElement
               type="top"
               isLocked={true}
-              text={`${bun.name} (верх)`}
-              price={bun.price}
-              thumbnail={bun.image}
+              text={`${bun.name || "Перетяните булку"} (верх)`}
+              price={bun.price || 0}
+              thumbnail={bun.image || loaderImage}
             />
           </li>
         )}
@@ -115,9 +102,9 @@ function BurgerConstructor() {
             <ConstructorElement
               type="bottom"
               isLocked={true}
-              text={`${bun.name} (низ)`}
-              price={bun.price}
-              thumbnail={bun.image}
+              text={`${bun.name || "Перетяните булку"} (низ)`}
+              price={bun.price || 0}
+              thumbnail={bun.image || loaderImage}
             />
           </li>
         )}

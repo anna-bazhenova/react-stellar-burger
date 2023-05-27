@@ -30,12 +30,11 @@ function BurgerIngredient({ingredient, onClick}) {
           <CurrencyIcon type="primary" />
         </div>
         <p className="text text_type_main-default">{name}</p>
-        <Counter count={count} size="default" extraClass="m-1" />
+        {count !== 0 && (<Counter count={count} size="default" extraClass="m-1" />)}
       </li>
     </>
   );
 }
-
 BurgerIngredient.propTypes = {
   ingredient: ingredientPropType.isRequired
 };
