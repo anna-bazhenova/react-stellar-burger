@@ -1,16 +1,16 @@
 import { ADD_BURGER_INGREDIENT, REMOVE_BURGER_INGREDIENT } from "../constants";
 
 
-export const addBurgerIngredient = (ingredientId) => {
+export const addBurgerIngredient = (ingredient) => {
   return {
     type: ADD_BURGER_INGREDIENT,
-    ingredientId: ingredientId
+    ingredient: ingredient
   }
 }
 
-export const removeBurgedIngredient = (ingredientId) => {
+export const removeBurgedIngredient = (ingredient) => {
   return {
     type: REMOVE_BURGER_INGREDIENT,
-    ingredientId: ingredientId
+    ingredient: ingredient
   }
 }

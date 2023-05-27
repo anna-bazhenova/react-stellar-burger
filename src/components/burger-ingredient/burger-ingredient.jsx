@@ -1,13 +1,19 @@
 import { CurrencyIcon, Counter } from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from "./burger-ingredient.module.css";
-import { useState } from "react";
 import { ingredientPropType } from "../../utils/prop-types";
+import { useDrag } from "react-dnd";
 
 function BurgerIngredient({ingredient, onClick}) {
+  const [, dragRef] = useDrag(() => ({
+    type: "BURGER_INGREDIENT",
+    item: {id: ingredient._id},
+  }));
+  
   const {image, price, name} = ingredient
+  
   return (
     <>
-      <li className={styles.list_item} onClick={onClick}>
+      <li className={styles.list_item} onClick={onClick} ref={dragRef}>
         <img className={styles.image} src={image} alt={name} />
         <div className={`${styles.container_price} mt-1 mb-1`}>
           <p className="text text_type_digits-default">{price}</p>

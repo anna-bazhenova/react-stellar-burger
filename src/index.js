@@ -10,7 +10,6 @@ import thunk from "redux-thunk";
 import { composeWithDevTools } from "redux-devtools-extension";
 
 const store = createStore(rootReducer, composeWithDevTools(applyMiddleware(thunk)));
-console.dir(store.getState());
 
 ReactDOM.render(
   <React.StrictMode>

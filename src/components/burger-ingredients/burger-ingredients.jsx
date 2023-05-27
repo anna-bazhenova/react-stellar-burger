@@ -10,12 +10,13 @@ import { hideIngredientDetails, showIngredientDetails } from "../../services/act
 import Modal from "../modal/modal";
 import IngredientDetails from "../ingredient-details/ingredient-details";
 
-function BurgerIngredients({ingredients}) {
+function BurgerIngredients() {
   const [tab, setTab] = useState('bun');
   
-  const dispatch = useDispatch();
-
   const { isModalOpen, openModal, closeModal } = useModal();
+  
+  const dispatch = useDispatch();
+  const ingredients = useSelector(state => state.availableIngredients.items)
   
   const buns = ingredients.filter((ingredient) => ingredient.type === 'bun');
   const sauces = ingredients.filter((ingredient) => ingredient.type === 'sauce');
