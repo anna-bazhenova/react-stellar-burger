@@ -8,6 +8,7 @@ import { clearOrderId } from "../../services/actions/order-details";
 import { useDrop } from "react-dnd";
 import { addBurgerIngredient, removeBurgedIngredient } from "../../services/actions/burger-constructor";
 import { useMemo } from "react";
+import { placeOrder } from "../../services/actions/api";
 
 function BurgerConstructor() {
 
@@ -22,13 +23,19 @@ function BurgerConstructor() {
 
   const dispatch = useDispatch();
 
-  const showOrderDetails = () => {
+  const orderBurger = () => {
+    dispatch(placeOrder(burgerIngredientIds()));
     openModal();
   }
   
   const hideOrderDetails = () => {
     dispatch(clearOrderId())
     closeModal();
+  }
+
+  const burgerIngredientIds = () => {
+    const ingredientIds = burgerIngredients.ingredients.map((it) => it._id);
+    return [...ingredientIds, burgerIngredients.bun._id]
   }
 
   const handleIngredientDrop = (item, monitor) => {
@@ -66,7 +73,7 @@ function BurgerConstructor() {
       burgerIngredients.ingredients.reduce(
         (acc, ingredient) => acc + ingredient.price,
         0
-      ) + burgerIngredients.bun ? burgerIngredients.bun.price * 2 : 0,
+      ) + burgerIngredients.bun.price ? burgerIngredients.bun.price * 2 : 0,
     [burgerIngredients]
   );
 
@@ -124,7 +131,7 @@ function BurgerConstructor() {
           htmlType="button"
           type="primary"
           size="large"
-          onClick={showOrderDetails}
+          onClick={orderBurger}
         >
           Оформить заказ
         </Button>

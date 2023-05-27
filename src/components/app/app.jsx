@@ -4,12 +4,11 @@ import BurgerIngredients from "../burger-ingredients/burger-ingredients";
 import BurgerConstructor from "../burger-constructor/burger-constructor";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getIngredients } from "../../services/actions/bugrger-ingredients";
+import { getIngredients } from "../../services/actions/api";
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
 
 function App() {
-  const { items } = useSelector((state) => state.availableIngredients);
   const dispatch = useDispatch()
   
   useEffect(() => {
