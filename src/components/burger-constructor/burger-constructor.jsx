@@ -6,7 +6,7 @@ import { useModal } from "../../hooks/useModal";
 import { useDispatch, useSelector } from "react-redux";
 import { clearOrderId } from "../../services/actions/order-details";
 import { useDrop } from "react-dnd";
-import { addBurgerIngredient } from "../../services/actions/burger-constructor";
+import { addBurgerIngredient, removeBurgedIngredient } from "../../services/actions/burger-constructor";
 import { useMemo } from "react";
 
 function BurgerConstructor() {
@@ -69,6 +69,10 @@ function BurgerConstructor() {
       ) + burgerIngredients.bun ? burgerIngredients.bun.price * 2 : 0,
     [burgerIngredients]
   );
+
+  const removeIngredient = (atIndex) => {
+    dispatch(removeBurgedIngredient(atIndex))
+  }
   
   return (
     <section ref={dropRef}>
@@ -86,13 +90,14 @@ function BurgerConstructor() {
         )}
         <li>
           <ul className={`${styles.mains_list} custom-scroll`}>
-            {otherIngredients.map((ingredient) => (
-              <li className={styles.mains_list_item} key={ingredient._id}>
+            {otherIngredients.map((ingredient, idx) => (
+              <li key={`${idx}-${ingredient._id}`} className={styles.mains_list_item}>
                 <DragIcon type="primary" />
                 <ConstructorElement
                   text={ingredient.name}
                   price={ingredient.price}
                   thumbnail={ingredient.image}
+                  handleClose={() => removeIngredient(idx)}
                 />
               </li>
             ))}

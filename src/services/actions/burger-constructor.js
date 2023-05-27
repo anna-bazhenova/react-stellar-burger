@@ -8,9 +8,9 @@ export const addBurgerIngredient = (ingredient) => {
   }
 }
 
-export const removeBurgedIngredient = (ingredient) => {
+export const removeBurgedIngredient = (atIndex) => {
   return {
     type: REMOVE_BURGER_INGREDIENT,
-    ingredient: ingredient
+    atIndex: atIndex
   }
 }
