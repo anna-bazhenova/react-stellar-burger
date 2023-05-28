@@ -5,6 +5,7 @@ import {
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { useRef } from "react";
 import { useDrag, useDrop } from "react-dnd";
+import PropTypes from "prop-types";
 
 const BURGER_ELEMENT_TYPE = "BURGER_CONSTRUCTOR_ELEMENT";
 
@@ -103,3 +104,12 @@ export function BugregConstructorElement({
     </li>
   );
 }
+
+BugregConstructorElement.propTypes = {
+  text: PropTypes.string.isRequired,
+  price: PropTypes.number.isRequired,
+  thumbnail: PropTypes.string.isRequired,
+  onRemove: PropTypes.func.isRequired,
+  index: PropTypes.number.isRequired,
+  moveElement: PropTypes.func.isRequired,
+};

@@ -3,6 +3,7 @@ import styles from "./burger-ingredient.module.css";
 import { ingredientPropType } from "../../utils/prop-types";
 import { useDrag } from "react-dnd";
 import { useSelector } from "react-redux";
+import PropTypes from "prop-types"
 
 function BurgerIngredient({ingredient, onClick}) {
 
@@ -36,7 +37,8 @@ function BurgerIngredient({ingredient, onClick}) {
   );
 }
 BurgerIngredient.propTypes = {
-  ingredient: ingredientPropType.isRequired
+  ingredient: ingredientPropType.isRequired,
+  onClick: PropTypes.func.isRequired
 };
 
 export default BurgerIngredient;
