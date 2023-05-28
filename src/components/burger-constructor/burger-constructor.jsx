@@ -7,9 +7,11 @@ import { useDispatch, useSelector } from "react-redux";
 import { clearOrderId } from "../../services/actions/order-details";
 import { useDrop } from "react-dnd";
 import { addBurgerIngredient, removeBurgedIngredient } from "../../services/actions/burger-constructor";
-import { useMemo } from "react";
+import { useMemo, useCallback } from "react";
 import { placeOrder } from "../../services/actions/api";
 import loaderImage from "../../images/circles.svg";
+import { BugregConstructorElement } from "../burger-constructor-element/burger-constructor-element";
+import { moveBurgerIngredient } from "../../services/actions/burger-constructor";
 
 function BurgerConstructor() {
 
@@ -67,6 +69,10 @@ function BurgerConstructor() {
   const removeIngredient = (atIndex) => {
     dispatch(removeBurgedIngredient(atIndex))
   }
+
+  const moveBurgerElement = useCallback((dragIndex, hoverIndex) => {
+    dispatch(moveBurgerIngredient(dragIndex, hoverIndex))
+  }, [])
   
   return (
     <section ref={dropRef}>
@@ -85,15 +91,15 @@ function BurgerConstructor() {
         <li>
           <ul className={`${styles.mains_list} custom-scroll`}>
             {otherIngredients.map((ingredient, idx) => (
-              <li key={`${idx}-${ingredient._id}`} className={styles.mains_list_item}>
-                <DragIcon type="primary" />
-                <ConstructorElement
-                  text={ingredient.name}
-                  price={ingredient.price}
-                  thumbnail={ingredient.image}
-                  handleClose={() => removeIngredient(idx)}
-                />
-              </li>
+              <BugregConstructorElement
+                 key={`${idx}-${ingredient._id}`}
+                 text={ingredient.name}
+                 price={ingredient.price}
+                 thumbnail={ingredient.image}
+                 onRemove={() => removeIngredient(idx)}
+                 index={idx}
+                 moveElement={moveBurgerElement}
+              />
             ))}
           </ul>
         </li>

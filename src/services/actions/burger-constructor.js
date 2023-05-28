@@ -1,4 +1,8 @@
-import { ADD_BURGER_INGREDIENT, REMOVE_BURGER_INGREDIENT } from "../constants";
+import {
+  ADD_BURGER_INGREDIENT,
+  REMOVE_BURGER_INGREDIENT,
+  MOVE_BURGER_INGREDIENTS,
+} from "../constants";
 
 export const addBurgerIngredient = (ingredient) => {
   return {
@@ -13,3 +17,9 @@ export const removeBurgedIngredient = (atIndex) => {
     atIndex: atIndex,
   };
 };
+
+export const moveBurgerIngredient = (sourceIdx, targetIdx) => ({
+  type: MOVE_BURGER_INGREDIENTS,
+  sourceIdx: sourceIdx,
+  targetIdx: targetIdx,
+});
