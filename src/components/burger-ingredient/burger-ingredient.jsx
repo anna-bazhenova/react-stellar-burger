@@ -1,37 +1,44 @@
 import { CurrencyIcon, Counter } from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from "./burger-ingredient.module.css";
-import { useState } from "react";
-import Modal from "../modal/modal";
-import IngredientDetails from "../ingredient-details/ingredient-details";
 import { ingredientPropType } from "../../utils/prop-types";
+import { useDrag } from "react-dnd";
+import { useSelector } from "react-redux";
+import PropTypes from "prop-types"
 
-function BurgerIngredient({ingredient}) {
-  const [showIngredient, setShowIngredient] = useState(false);
+function BurgerIngredient({ingredient, onClick}) {
+
+  const count = useSelector((store) => {
+    const burgerIngredients = store.burgerIngredients;
+    if (ingredient.type === "bun") {
+      return burgerIngredients.bun._id === ingredient._id ? 2 : 0;
+    }
+    return burgerIngredients.ingredients.filter((i) => i._id === ingredient._id).length;
+  });
+
+  const [, dragRef] = useDrag(() => ({
+    type: "BURGER_INGREDIENT",
+    item: {id: ingredient._id},
+  }));
+  
   const {image, price, name} = ingredient
+  
   return (
     <>
-      <li className={styles.list_item} onClick={() => setShowIngredient(true)}>
+      <li className={styles.list_item} onClick={onClick} ref={dragRef}>
         <img className={styles.image} src={image} alt={name} />
         <div className={`${styles.container_price} mt-1 mb-1`}>
           <p className="text text_type_digits-default">{price}</p>
           <CurrencyIcon type="primary" />
         </div>
         <p className="text text_type_main-default">{name}</p>
-        <Counter count={1} size="default" extraClass="m-1" />
+        {count !== 0 && (<Counter count={count} size="default" extraClass="m-1" />)}
       </li>
-      {showIngredient && (
-        <Modal
-          header={"Детали ингредиента"}
-          onClose={() => setShowIngredient(false)}>
-            <IngredientDetails ingredient={ingredient}/>
-        </Modal>
-      )}
     </>
   );
 }
-
 BurgerIngredient.propTypes = {
-  ingredient: ingredientPropType.isRequired
+  ingredient: ingredientPropType.isRequired,
+  onClick: PropTypes.func.isRequired
 };
 
 export default BurgerIngredient;

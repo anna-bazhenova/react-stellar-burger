@@ -1,0 +1,14 @@
+.mains_list_item {
+  margin-bottom: 16px;
+  display: flex;
+  align-items: center;
+  column-gap: 8px;
+}
+
+.mains_list_item:last-child {
+  margin-bottom: 0;
+}
+
+.dragging {
+  opacity: 0;
+}
