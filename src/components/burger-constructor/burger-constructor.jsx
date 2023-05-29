@@ -92,7 +92,7 @@ function BurgerConstructor() {
           <ul className={`${styles.mains_list} custom-scroll`}>
             {otherIngredients.map((ingredient, idx) => (
               <BugregConstructorElement
-                 key={`${idx}-${ingredient._id}`}
+                 key={ingredient.uniqueId}
                  text={ingredient.name}
                  price={ingredient.price}
                  thumbnail={ingredient.image}
@@ -125,6 +125,7 @@ function BurgerConstructor() {
           type="primary"
           size="large"
           onClick={orderBurger}
+          disabled={Object.keys(bun).length === 0}
         >
           Оформить заказ
         </Button>

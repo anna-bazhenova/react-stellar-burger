@@ -10,12 +10,6 @@ const initialState = {
   ingredients: [],
 };
 
-const arrayMove = (arr, sourceIdx, targetIdx) => {
-  let res = [...arr]
-  res.splice(targetIdx, 0, res.splice(sourceIdx, 1)[0]);
-  return res;
-}
-
 export const burgerConstrustorReducer = (state = initialState, action) => {
   switch (action.type) {
     case ADD_BURGER_INGREDIENT: {
@@ -36,6 +30,11 @@ export const burgerConstrustorReducer = (state = initialState, action) => {
       };
     }
     case MOVE_BURGER_INGREDIENTS: {
+      const arrayMove = (arr, sourceIdx, targetIdx) => {
+        let res = [...arr]
+        res.splice(targetIdx, 0, res.splice(sourceIdx, 1)[0]);
+        return res;
+      }
       return {
         ...state,
         ingredients: arrayMove(

@@ -8,21 +8,13 @@ import {
   CLEAR_BURGER_INGREDIENTS,
 } from "../constants";
 
-const basePath = "https://norma.nomoreparties.space/api";
+import request from "../../utils/request";
 
 export const getIngredients = () => {
   return (dispatch) => {
     dispatch({ type: GET_INGREDIENTS_REQUEST });
 
-    fetch(`${basePath}/ingredients`)
-      .then((res) => {
-        if (res.ok) {
-          return res.json();
-        } else {
-          dispatch({ type: GET_INGREDIENTS_ERROR });
-          return Promise.reject(`Ошибка ${res.status}`);
-        }
-      })
+    request("ingredients")
       .then((json) => {
         dispatch({
           type: GET_INGREDIENTS_SUCCESS,
@@ -40,7 +32,7 @@ export const placeOrder = (ingredientIds) => {
   return (dispatch) => {
     dispatch({ type: PLACE_ORDER_REQUEST });
 
-    fetch(`${basePath}/orders`, {
+    request("orders", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -49,14 +41,6 @@ export const placeOrder = (ingredientIds) => {
         ingredients: ingredientIds,
       }),
     })
-      .then((res) => {
-        if (res.ok) {
-          return res.json();
-        } else {
-          dispatch({ type: PLACE_ORDER_ERROR });
-          return Promise.reject(`Ошибка ${res.status}`);
-        }
-      })
       .then((json) => {
         dispatch({
           type: PLACE_ORDER_SUSSESS,
