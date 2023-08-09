@@ -8,8 +8,7 @@ import { rootReducer } from "./services/reducers";
 import { Provider } from "react-redux";
 import thunk from "redux-thunk";
 import { composeWithDevTools } from "redux-devtools-extension";
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import { Login, Register, ForgotPassword, ResetPassword } from './pages';
+import { BrowserRouter } from 'react-router-dom';
 
 const store = createStore(rootReducer, composeWithDevTools(applyMiddleware(thunk)));
 
@@ -17,13 +16,7 @@ ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>
       <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<App />} />
-          <Route path="/login" element={< Login />} />
-          <Route path="/register" element={ < Register />} />
-          <Route path="/forgot-password" element={ < ForgotPassword />} />
-          <Route path="/reset-password" element={ < ResetPassword />} />
-        </Routes>
+        <App />
       </BrowserRouter>
     </Provider>
   </React.StrictMode>,

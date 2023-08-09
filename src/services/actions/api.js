@@ -8,9 +8,9 @@ import {
   CLEAR_BURGER_INGREDIENTS,
 } from "../constants";
 
-import request from "../../utils/request";
+import {request} from "../../utils/request";
 
-export const getIngredients = () => {
+const getIngredients = () => {
   return (dispatch) => {
     dispatch({ type: GET_INGREDIENTS_REQUEST });
 
@@ -28,11 +28,11 @@ export const getIngredients = () => {
   };
 };
 
-export const placeOrder = (ingredientIds) => {
-  return (dispatch) => {
+const placeOrder = (ingredientIds) => {
+  return async (dispatch) => {
     dispatch({ type: PLACE_ORDER_REQUEST });
 
-    request("orders", {
+    await request("orders", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -56,3 +56,5 @@ export const placeOrder = (ingredientIds) => {
       });
   };
 };
+
+export { getIngredients, placeOrder };
