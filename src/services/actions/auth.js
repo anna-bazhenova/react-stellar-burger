@@ -5,6 +5,7 @@ import {
   UPDATE_USER,
   PASSWORD_RESET_PENDING,
   CLEAR_PASSWORD_RESET,
+  SET_USER,
 } from "../constants";
 import { request, requestWithTokenRefresh } from "../../utils/request";
 
@@ -21,16 +22,12 @@ export const login = (user) => {
       }),
     })
       .then((response) => {
-        if (response.success) {
-          localStorage.setItem("accessToken", response.accessToken);
-          localStorage.setItem("refreshToken", response.refreshToken);
-          dispatch({
-            type: LOGIN_USER,
-            user: response.user,
-          });
-        } else {
-          return Promise.reject("Ошибка данных");
-        }
+        localStorage.setItem("accessToken", response.accessToken);
+        localStorage.setItem("refreshToken", response.refreshToken);
+        dispatch({
+          type: LOGIN_USER,
+          user: response.user,
+        });
       })
       .catch((err) => {
         console.log(err);
@@ -51,16 +48,12 @@ export const register = (user) => {
       }),
     })
       .then((response) => {
-        if (response.success) {
-          localStorage.setItem("accessToken", response.accessToken);
-          localStorage.setItem("refreshToken", response.refreshToken);
-          dispatch({
-            type: REGISTER_USER,
-            user: response.user,
-          });
-        } else {
-          return Promise.reject("Ошибка данных");
-        }
+        localStorage.setItem("accessToken", response.accessToken);
+        localStorage.setItem("refreshToken", response.refreshToken);
+        dispatch({
+          type: REGISTER_USER,
+          user: response.user,
+        });
       })
       .catch((err) => {
         console.log(err);
@@ -80,15 +73,11 @@ export const logout = () => {
       }),
     })
       .then((response) => {
-        if (response.success) {
-          localStorage.removeItem("accessToken");
-          localStorage.removeItem("refreshToken");
-          dispatch({
-            type: LOGOUT_USER,
-          });
-        } else {
-          return Promise.reject("Ошибка данных");
-        }
+        localStorage.removeItem("accessToken");
+        localStorage.removeItem("refreshToken");
+        dispatch({
+          type: LOGOUT_USER,
+        });
       })
       .catch((err) => {
         console.log(err);
@@ -108,13 +97,9 @@ export const requestPasswordReset = (email) => {
       }),
     })
       .then((response) => {
-        if (response.success) {
-          dispatch({
-            type: PASSWORD_RESET_PENDING,
-          });
-        } else {
-          return Promise.reject("Ошибка данных");
-        }
+        dispatch({
+          type: PASSWORD_RESET_PENDING,
+        });
       })
       .catch((err) => {
         console.log(err);
@@ -135,13 +120,30 @@ export const resetPassword = (password, token) => {
       }),
     })
       .then((response) => {
-        if (response.success) {
-          dispatch({
-            type: CLEAR_PASSWORD_RESET,
-          });
-        } else {
-          return Promise.reject("Ошибка данных");
-        }
+        dispatch({
+          type: CLEAR_PASSWORD_RESET,
+        });
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+};
+
+export const getUser = () => {
+  return async (dispatch) => {
+    await requestWithTokenRefresh("auth/user", {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        authorization: localStorage.getItem("accessToken"),
+      },
+    })
+      .then((response) => {
+        dispatch({
+          type: SET_USER,
+          user: response.user,
+        });
       })
       .catch((err) => {
         console.log(err);
@@ -164,14 +166,10 @@ export const updateUser = (user) => {
       }),
     })
       .then((response) => {
-        if (response.success) {
-          dispatch({
-            type: UPDATE_USER,
-            user: response.user,
-          });
-        } else {
-          return Promise.reject("Ошибка данных");
-        }
+        dispatch({
+          type: UPDATE_USER,
+          user: response.user,
+        });
       })
       .catch((err) => {
         console.log(err);

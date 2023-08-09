@@ -11,6 +11,7 @@ import { Orders } from "../orders/orders";
 import { ProfileDetails } from "../profile-details/profile-details";
 import IngredientDetails from "../ingredient-details/ingredient-details";
 import Modal from "../modal/modal";
+import { getUser } from "../../services/actions/auth";
 
 function App() {
   const dispatch = useDispatch()
@@ -20,10 +21,13 @@ function App() {
   
   const navigate = useNavigate();
 
-  
   useEffect(() => {
+    const token = localStorage.getItem("accessToken");
+    if (token) {
+      dispatch(getUser());
+    }
     dispatch(getIngredients())
-  }, []);
+  }, [dispatch]);
   
   return (
     <div className={styles.app}>

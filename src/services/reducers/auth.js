@@ -4,6 +4,7 @@ import {
   LOGOUT_USER,
   PASSWORD_RESET_PENDING,
   REGISTER_USER,
+  SET_USER,
   UPDATE_USER,
 } from "../constants";
 
@@ -32,6 +33,12 @@ export const authReducer = (state = initialState, action) => {
         ...state,
         user: null,
         isAuthorized: false,
+      };
+    case SET_USER:
+      return {
+        ...state,
+        user: action.user,
+        isAuthorized: true,
       };
     case UPDATE_USER:
       return {
