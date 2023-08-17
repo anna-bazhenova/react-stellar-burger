@@ -12,6 +12,7 @@ import { placeOrder } from "../../services/actions/api";
 import loaderImage from "../../images/circles.svg";
 import { BugregConstructorElement } from "../burger-constructor-element/burger-constructor-element";
 import { moveBurgerIngredient } from "../../services/actions/burger-constructor";
+import { useNavigate } from "react-router";
 
 function BurgerConstructor() {
 
@@ -25,10 +26,16 @@ function BurgerConstructor() {
   const { isModalOpen, openModal, closeModal } = useModal();
 
   const dispatch = useDispatch();
-
-  const orderBurger = () => {
-    dispatch(placeOrder(burgerIngredientIds()));
-    openModal();
+  const navigate = useNavigate();
+  const isAuthorized = useSelector((store) => store.authReducer.isAuthorized);
+  
+  const orderBurger = async () => {
+    if (isAuthorized) {
+      await dispatch(placeOrder(burgerIngredientIds()));
+      openModal();
+    } else {
+      navigate("login", {replace: true});
+    }
   }
   
   const hideOrderDetails = () => {
