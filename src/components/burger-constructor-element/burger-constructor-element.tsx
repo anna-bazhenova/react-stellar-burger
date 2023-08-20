@@ -5,25 +5,39 @@ import {
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { useRef } from "react";
 import { useDrag, useDrop } from "react-dnd";
-import PropTypes from "prop-types";
+
 
 const BURGER_ELEMENT_TYPE = "BURGER_CONSTRUCTOR_ELEMENT";
 
-export function BugregConstructorElement({
+type TBugregConstructorElementProps = {
+  text: string;
+  price: number;
+  thumbnail: string;
+  onRemove: () => void;
+  index: number;
+  moveElement: (dragIndex: number, hoverIndex: number) => void;
+}
+
+type TDragNDropItem = {
+  index: number;
+}
+
+const BurgerConstructorElement = ({
   text,
   price,
   thumbnail,
   onRemove,
   index,
   moveElement,
-}) {
-  const ref = useRef(null);
-  const [{ handlerId }, drop] = useDrop({
+}: TBugregConstructorElementProps) => {
+  
+  const ref = useRef<HTMLLIElement>(null);
+  
+  const [handlerId , drop] = useDrop<TDragNDropItem, unknown, string | symbol | null>({
     accept: BURGER_ELEMENT_TYPE,
+    
     collect(monitor) {
-      return {
-        handlerId: monitor.getHandlerId(),
-      };
+      return monitor.getHandlerId();
     },
 
     hover(item, monitor) {
@@ -42,7 +56,7 @@ export function BugregConstructorElement({
       const hoverMiddleY =
         (hoverBoundingRect.bottom - hoverBoundingRect.top) / 2;
 
-      const clientOffset = monitor.getClientOffset();
+      const clientOffset = monitor.getClientOffset()!;
 
       const hoverClientY = clientOffset.y - hoverBoundingRect.top;
 
@@ -62,14 +76,12 @@ export function BugregConstructorElement({
     },
   });
 
-  const [{isDragging}, drag] = useDrag({
+  const [isDragging, drag] = useDrag<TDragNDropItem, unknown, boolean>({
     type: BURGER_ELEMENT_TYPE,
     item: () => {
       return { index };
     },
-    collect: (monitor) => ({
-      isDragging: monitor.isDragging(),
-    }),
+    collect: (monitor) => monitor.isDragging(),
   });
 
   drag(drop(ref));
@@ -91,11 +103,4 @@ export function BugregConstructorElement({
   );
 }
 
-BugregConstructorElement.propTypes = {
-  text: PropTypes.string.isRequired,
-  price: PropTypes.number.isRequired,
-  thumbnail: PropTypes.string.isRequired,
-  onRemove: PropTypes.func.isRequired,
-  index: PropTypes.number.isRequired,
-  moveElement: PropTypes.func.isRequired,
-};
+export default BurgerConstructorElement;

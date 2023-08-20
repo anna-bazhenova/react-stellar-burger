@@ -1,13 +1,12 @@
 import { NavLink, Outlet } from 'react-router-dom';
 import styles from './profile.module.css'
-import { Button } from "@ya.praktikum/react-developer-burger-ui-components";
 import { useDispatch } from "react-redux";
 import { logout } from "../../services/actions/auth";
 
 
-function Profile() {
+const Profile = () => {
 
-  const setNavStyle = ({isActive}) => {
+  const setNavStyle = ({isActive}: {isActive: boolean}) => {
     return isActive ? `${styles.link} text text_type_main-medium text_color_primary mb-6` : `${styles.link} text text_type_main-medium text_color_inactive mb-6`
   }
 

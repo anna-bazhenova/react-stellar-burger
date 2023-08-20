@@ -2,19 +2,19 @@ import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
 import BurgerIngredient from "../burger-ingredient/burger-ingredient";
 import styles from "./burger-ingredients.module.css";
 import { useRef, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { useModal } from "../../hooks/useModal";
 import Modal from "../modal/modal";
 import IngredientDetails from "../ingredient-details/ingredient-details";
 import { useLocation, useNavigate } from "react-router";
+import { TIngredient } from "../../utils/types";
 
-function BurgerIngredients() {
+const BurgerIngredients = () => {
   const [tab, setTab] = useState('bun');
   
-  const { isModalOpen, openModal, closeModal } = useModal();
+  const { isModalOpen, closeModal } = useModal();
   
-  const dispatch = useDispatch();
-  const ingredients = useSelector(state => state.availableIngredients.items)
+  const ingredients = useSelector((state: any) => state.availableIngredients.items) as TIngredient[]
   
   const buns = ingredients.filter((ingredient) => ingredient.type === 'bun');
   const sauces = ingredients.filter((ingredient) => ingredient.type === 'sauce');
@@ -23,7 +23,7 @@ function BurgerIngredients() {
   const navigate = useNavigate();
   const location = useLocation();
   
-  const showDetails = (ingredient) => {
+  const showDetails = (ingredient: TIngredient) => {
     navigate(`/ingredients/${ingredient._id}`, {state: {background: location}})
   }
 
@@ -31,16 +31,16 @@ function BurgerIngredients() {
     closeModal();
   }
 
-  const sectionRef = useRef()
-  const bunsRef = useRef()
-  const saucesRef = useRef()
-  const mainsRef = useRef()
+  const sectionRef = useRef<HTMLElement>(null)
+  const bunsRef = useRef<HTMLHeadingElement>(null)
+  const saucesRef = useRef<HTMLHeadingElement>(null)
+  const mainsRef = useRef<HTMLHeadingElement>(null)
   
   const handleScroll = () => {
-    const sectionRect = sectionRef.current.getBoundingClientRect();
-    const bunsRect = bunsRef.current.getBoundingClientRect();
-    const saucesRect = saucesRef.current.getBoundingClientRect();
-    const mainsRect = mainsRef.current.getBoundingClientRect();
+    const sectionRect = sectionRef.current!.getBoundingClientRect();
+    const bunsRect = bunsRef.current!.getBoundingClientRect();
+    const saucesRect = saucesRef.current!.getBoundingClientRect();
+    const mainsRect = mainsRef.current!.getBoundingClientRect();
 
     const bunsDistance = Math.min(
       Math.abs(bunsRect.bottom - sectionRect.top),
@@ -57,15 +57,18 @@ function BurgerIngredients() {
       Math.abs(mainsRect.top - sectionRect.top)
     );
 
-    let tabToSelect;
+    let tabToSelect: string;
     if (bunsDistance < saucesDistance && bunsDistance < mainsDistance) {
-      tabToSelect = "bun"
-    }
-    if (saucesDistance < bunsDistance && saucesDistance < mainsDistance) {
-      tabToSelect = "sauce"
-    }
-    if (mainsDistance < saucesDistance && mainsDistance < bunsDistance) {
-      tabToSelect = "main"
+      tabToSelect = "bun";
+    } else if (
+      saucesDistance < bunsDistance &&
+      saucesDistance < mainsDistance
+    ) {
+      tabToSelect = "sauce";
+    } else if (mainsDistance < saucesDistance && mainsDistance < bunsDistance) {
+      tabToSelect = "main";
+    } else {
+      tabToSelect = "main";
     }
 
     if (tab !== tabToSelect) {
@@ -77,13 +80,13 @@ function BurgerIngredients() {
   return (
     <section ref={sectionRef}>
       <div className={styles.tab_block}>
-        <Tab value="bun" active={tab === 'bun'} onClick={() => bunsRef.current.scrollIntoView()}>
+        <Tab value="bun" active={tab === 'bun'} onClick={() => bunsRef.current?.scrollIntoView()}>
           Булки
         </Tab>
-        <Tab value="sauce" active={tab === 'sauce'} onClick={() => saucesRef.current.scrollIntoView()}>
+        <Tab value="sauce" active={tab === 'sauce'} onClick={() => saucesRef.current?.scrollIntoView()}>
           Соусы
         </Tab>
-        <Tab value="main" active={tab === 'main'} onClick={() => mainsRef.current.scrollIntoView()}>
+        <Tab value="main" active={tab === 'main'} onClick={() => mainsRef.current?.scrollIntoView()}>
           Начинки
         </Tab>
       </div>

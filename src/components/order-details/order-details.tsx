@@ -3,8 +3,8 @@ import orderImage from "../../images/done.svg";
 import { useSelector } from "react-redux";
 
 
-function OrderDetails() {
-  const orderId = useSelector(state => state.orderDetails.orderId)
+const OrderDetails = () => {
+  const orderId = useSelector((state: any) => state.orderDetails.orderId) as number
   return (
     <div>
       <p className={`${styles.order_id} text text_type_digits-large mt-15`}>{orderId}</p>

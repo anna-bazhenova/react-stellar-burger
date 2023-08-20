@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { ChangeEvent, FormEvent, useState } from 'react';
 import { PasswordInput, Button, Input } from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from '../form.module.css';
 import { Navigate, useNavigate } from 'react-router';
@@ -6,22 +6,23 @@ import { useDispatch, useSelector } from 'react-redux';
 import { resetPassword } from '../../services/actions/auth';
 
 
-function ResetPassword() {
+const ResetPassword = () => {
+  
   const [form, setValue] = useState({ token: "", password: "" });
-  const onFromChange = (e) => {
+  const onFromChange = (e: ChangeEvent<HTMLInputElement>) => {
     setValue({ ...form, [e.target.name]: e.target.value });
   };
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
   
-  const isPasswordResetPending = useSelector((store) => store.authReducer.isPasswordResetPending);
+  const isPasswordResetPending = useSelector((store: any) => store.auth.isPasswordResetPending) as boolean;
 
   if (!isPasswordResetPending) {
     return <Navigate to="/" replace={true} />;
   }
   
-  const handleResetPassword = async (e) => {
+  const handleResetPassword = async (e: FormEvent) => {
     e.preventDefault();
     await dispatch(resetPassword(form.password, form.token))
     navigate("/login", { replace: true });

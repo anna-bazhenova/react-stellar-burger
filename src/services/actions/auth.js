@@ -136,7 +136,7 @@ export const getUser = () => {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
-        authorization: localStorage.getItem("accessToken"),
+        "Authorization": localStorage.getItem("accessToken"),
       },
     })
       .then((response) => {
@@ -157,7 +157,7 @@ export const updateUser = (user) => {
       method: "PATCH",
       headers: {
         "Content-Type": "application/json",
-        authorization: localStorage.getItem("accessToken"),
+        "Authorization": localStorage.getItem("accessToken"),
       },
       body: JSON.stringify({
         name: user.name,

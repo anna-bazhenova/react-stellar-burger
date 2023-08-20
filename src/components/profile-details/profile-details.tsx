@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { FormEvent, ChangeEvent, useEffect, useState } from "react";
 import {
   EmailInput,
   PasswordInput,
@@ -8,12 +8,14 @@ import {
 import { useDispatch, useSelector } from "react-redux";
 import { updateUser } from "../../services/actions/auth";
 import styles from "./profile-details.module.css";
+import { TUser } from "../../utils/types";
 
-function ProfileDetails() {
+const ProfileDetails = () => {
   
-  const user = useSelector((store) => store.authReducer.user);
+  const user = useSelector((store: any) => store.auth.user) as TUser;
+  
   useEffect(() => {
-    setValue(user);
+    setValue({...user, password: ""});
   }, [user]);
   
   const [form, setValue] = useState({
@@ -24,20 +26,20 @@ function ProfileDetails() {
   
   const [changed, setChanged] = useState(false);
   
-  const onChange = (e) => {
+  const onChange = (e: ChangeEvent<HTMLInputElement>) => {
     setValue({ ...form, [e.target.name]: e.target.value });
     setChanged(true);
   };
 
   const dispatch = useDispatch();
-  const handleSubmit = (e) => {
+  const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
     dispatch(updateUser(form));
     setChanged(false);
   }
 
-  const handleReset = (e) => {
-    setValue(user);
+  const handleReset = () => {
+    setValue({...user, password: ""});
     setChanged(false);
   }
 
@@ -58,7 +60,7 @@ function ProfileDetails() {
         onChange={onChange}
         value={form.email || ""}
         name={"email"}
-        icon="EditIcon"
+        isIcon={true}
         extraClass="mt-6"
       />
       <PasswordInput
