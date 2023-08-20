@@ -2,7 +2,7 @@ import { BurgerIcon, ListIcon, Logo, ProfileIcon } from "@ya.praktikum/react-dev
 import styles from "./app-header.module.css";
 import { NavLink } from "react-router-dom";
 
-function AppHeader() {
+const AppHeader = () => {
   return (
     <header className={`${styles.header} text text_type_main-default p-4`}>
       <div className={styles.menu_container}>

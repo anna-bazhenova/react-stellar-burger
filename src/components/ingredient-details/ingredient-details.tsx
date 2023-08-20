@@ -1,11 +1,12 @@
 import { useParams } from "react-router";
 import styles from "./ingredient-details.module.css";
 import { useSelector } from "react-redux";
+import { TIngredient } from "../../utils/types";
 
-function IngredientDetails() {
-  const {id} = useParams()
+const IngredientDetails = () => {
+  const { id } = useParams()
   
-  const allIngredients = useSelector((state) => state.availableIngredients.items);
+  const allIngredients = useSelector((state: any) => state.availableIngredients.items) as TIngredient[];
   const ingredient = allIngredients.find((el) => el._id === id);
 
   if (!ingredient) {

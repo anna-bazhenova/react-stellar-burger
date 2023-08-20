@@ -13,11 +13,11 @@ import IngredientDetails from "../ingredient-details/ingredient-details";
 import Modal from "../modal/modal";
 import { getUser } from "../../services/actions/auth";
 
-function App() {
+const App = () => {
   const dispatch = useDispatch()
 
   const location = useLocation();
-  const background = location.state && location.state.background;
+  const background = location.state?.background as Location | undefined;
   
   const navigate = useNavigate();
 

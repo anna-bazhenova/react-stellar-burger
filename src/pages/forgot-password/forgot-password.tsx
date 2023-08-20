@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { ChangeEvent, FormEvent } from 'react';
 import { EmailInput, Button } from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from '../form.module.css';
 import { Link, useNavigate } from 'react-router-dom';
@@ -6,17 +6,17 @@ import { useDispatch } from 'react-redux';
 import { requestPasswordReset } from '../../services/actions/auth';
 
 
-function ForgotPassword() {
+const ForgotPassword = () => {
   const navigate = useNavigate();
   const [email, setEmail] = React.useState("");
 
-  const onEmailChange = (e) => {
+  const onEmailChange = (e: ChangeEvent<HTMLInputElement>) => {
     setEmail(e.target.value);
   };
 
   const dispatch = useDispatch()
 
-  const handleSubmit = async (event) => {
+  const handleSubmit = async (event: FormEvent) => {
     event.preventDefault();
     await dispatch(requestPasswordReset(email));
     navigate("/reset-password", { replace: true });

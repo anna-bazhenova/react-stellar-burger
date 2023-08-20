@@ -9,7 +9,7 @@ const initialState = {
   orderId: null,
 };
 
-export const orderDetails = (state = initialState, action) => {
+export const orderDetailsReducer = (state = initialState, action) => {
   switch (action.type) {
     case PLACE_ORDER_REQUEST: {
       return state;

@@ -1,4 +1,4 @@
-import { useCallback, useState } from 'react';
+import { ChangeEvent, FormEvent, useCallback, useState } from 'react';
 import { useDispatch, useSelector } from "react-redux";
 import { EmailInput, PasswordInput, Button } from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from '../form.module.css';
@@ -6,20 +6,21 @@ import { useNavigate, useLocation, Link } from "react-router-dom"
 import {login} from "../../services/actions/auth"
 
 
-function Login() {
+const Login = () => {
   const [form, setValue] = useState({ email: "", password: "" });
-  const onFromChange = (e) => {
+  
+  const onFromChange = (e: ChangeEvent<HTMLInputElement>) => {
     setValue({ ...form, [e.target.name]: e.target.value });
   };
 
-  const isAuthorized = useSelector((store) => store.authReducer.isAuthorized);
+  const isAuthorized = useSelector((store: any) => store.auth.isAuthorized) as boolean;
   
   const location = useLocation();
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
   const handleLogin = useCallback(
-    (e) => {
+    (e: FormEvent) => {
       e.preventDefault();
       dispatch(login(form));
     },
