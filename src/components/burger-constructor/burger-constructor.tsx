@@ -75,7 +75,9 @@ const BurgerConstructor = () => {
     const ingredient = availableIngredients.find(
       (ingredient) => ingredient._id === item.id
     );
-    dispatch(addBurgerIngredient(ingredient));
+    if (ingredient !== undefined) {
+      dispatch(addBurgerIngredient(ingredient));
+    }
   };
 
   const [, dropRef] = useDrop<TDropItem, unknown, unknown>(
