@@ -12,12 +12,12 @@ export type TIngredient = {
   image_large: string;
 };
 
-
 export type TBurgerIngredient = TIngredient & {
   uniqueId: string;
 };
 
 export type TUser = {
-  name: string;
+  name?: string;
   email: string;
-}
+  password?: string;
+};

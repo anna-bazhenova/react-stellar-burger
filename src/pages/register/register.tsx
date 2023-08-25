@@ -1,8 +1,8 @@
 import { ChangeEvent, FormEvent, useState } from 'react';
 import { EmailInput, PasswordInput, Button, Input } from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from '../form.module.css';
-import { useDispatch } from 'react-redux';
-import { register } from '../../services/actions/auth';
+import { register } from '../../services/actions/auth-actions';
+import { useAppDispatch } from '../../hooks/redux-hooks';
 
 
 const Register = () => {
@@ -12,7 +12,7 @@ const Register = () => {
     setValue({ ...form, [e.target.name]: e.target.value });
   };
 
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const handleUserRegistration = (e: FormEvent) => {
     e.preventDefault();
     dispatch(register(form));

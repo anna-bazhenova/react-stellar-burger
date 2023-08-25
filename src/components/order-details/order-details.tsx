@@ -1,10 +1,10 @@
 import styles from "./order-details.module.css";
 import orderImage from "../../images/done.svg";
-import { useSelector } from "react-redux";
+import { useAppSelector } from "../../hooks/redux-hooks";
 
 
 const OrderDetails = () => {
-  const orderId = useSelector((state: any) => state.orderDetails.orderId) as number
+  const orderId = useAppSelector((state) => state.orderDetails.orderId)
   return (
     <div>
       <p className={`${styles.order_id} text text_type_digits-large mt-15`}>{orderId}</p>

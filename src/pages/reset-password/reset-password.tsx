@@ -2,8 +2,8 @@ import { ChangeEvent, FormEvent, useState } from 'react';
 import { PasswordInput, Button, Input } from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from '../form.module.css';
 import { Navigate, useNavigate } from 'react-router';
-import { useDispatch, useSelector } from 'react-redux';
-import { resetPassword } from '../../services/actions/auth';
+import { resetPassword } from '../../services/actions/auth-actions';
+import { useAppDispatch, useAppSelector } from '../../hooks/redux-hooks';
 
 
 const ResetPassword = () => {
@@ -14,9 +14,9 @@ const ResetPassword = () => {
   };
 
   const navigate = useNavigate();
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   
-  const isPasswordResetPending = useSelector((store: any) => store.auth.isPasswordResetPending) as boolean;
+  const isPasswordResetPending = useAppSelector((store) => store.auth.isPasswordResetPending);
 
   if (!isPasswordResetPending) {
     return <Navigate to="/" replace={true} />;

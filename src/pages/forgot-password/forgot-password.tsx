@@ -2,8 +2,8 @@ import React, { ChangeEvent, FormEvent } from 'react';
 import { EmailInput, Button } from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from '../form.module.css';
 import { Link, useNavigate } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
-import { requestPasswordReset } from '../../services/actions/auth';
+import { requestPasswordReset } from '../../services/actions/auth-actions';
+import { useAppDispatch } from '../../hooks/redux-hooks';
 
 
 const ForgotPassword = () => {
@@ -14,7 +14,7 @@ const ForgotPassword = () => {
     setEmail(e.target.value);
   };
 
-  const dispatch = useDispatch()
+  const dispatch = useAppDispatch()
 
   const handleSubmit = async (event: FormEvent) => {
     event.preventDefault();

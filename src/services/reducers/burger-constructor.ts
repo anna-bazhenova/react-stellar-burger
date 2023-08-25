@@ -1,3 +1,5 @@
+import { TBurgerIngredient } from "../../utils/types";
+import { TBurgerActions } from "../actions/burger-actions";
 import {
   ADD_BURGER_INGREDIENT,
   CLEAR_BURGER_INGREDIENTS,
@@ -5,12 +7,20 @@ import {
   MOVE_BURGER_INGREDIENTS,
 } from "../constants";
 
-const initialState = {
-  bun: {},
+type TBurgerConstructorState = {
+  bun: TBurgerIngredient | null;
+  ingredients: TBurgerIngredient[];
+};
+
+const initialState: TBurgerConstructorState = {
+  bun: null,
   ingredients: [],
 };
 
-export const burgerConstrustorReducer = (state = initialState, action) => {
+export const burgerConstrustorReducer = (
+  state = initialState,
+  action: TBurgerActions
+) => {
   switch (action.type) {
     case ADD_BURGER_INGREDIENT: {
       if (action.ingredient.type === "bun") {
@@ -30,11 +40,15 @@ export const burgerConstrustorReducer = (state = initialState, action) => {
       };
     }
     case MOVE_BURGER_INGREDIENTS: {
-      const arrayMove = (arr, sourceIdx, targetIdx) => {
-        let res = [...arr]
+      const arrayMove = (
+        arr: TBurgerIngredient[],
+        sourceIdx: number,
+        targetIdx: number
+      ): TBurgerIngredient[] => {
+        let res = [...arr];
         res.splice(targetIdx, 0, res.splice(sourceIdx, 1)[0]);
         return res;
-      }
+      };
       return {
         ...state,
         ingredients: arrayMove(

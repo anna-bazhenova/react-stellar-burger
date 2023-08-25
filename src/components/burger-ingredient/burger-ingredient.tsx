@@ -4,8 +4,8 @@ import {
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from "./burger-ingredient.module.css";
 import { useDrag } from "react-dnd";
-import { useSelector } from "react-redux";
-import { TBurgerIngredient, TIngredient } from "../../utils/types";
+import { TIngredient } from "../../utils/types";
+import { useAppSelector } from "../../hooks/redux-hooks";
 
 type TBurgerIngredientProps = {
   ingredient: TIngredient;
@@ -17,13 +17,10 @@ type TDragItem = {
 };
 
 const BurgerIngredient = ({ ingredient, onClick }: TBurgerIngredientProps) => {
-  const count = useSelector((store: any) => {
-    const burgerIngredients = store.burgerIngredients as {
-      bun: TBurgerIngredient;
-      ingredients: TBurgerIngredient[];
-    };
+  const count = useAppSelector((store) => {
+    const burgerIngredients = store.burgerIngredients;
     if (ingredient.type === "bun") {
-      return burgerIngredients.bun._id === ingredient._id ? 2 : 0;
+      return burgerIngredients.bun?._id === ingredient._id ? 2 : 0;
     }
     return burgerIngredients.ingredients.filter((i) => i._id === ingredient._id)
       .length;

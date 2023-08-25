@@ -8,9 +8,52 @@ import {
   SET_USER,
 } from "../constants";
 import { request, requestWithTokenRefresh } from "../../utils/request";
+import { TUser } from "../../utils/types";
+import { AppDispatch } from "../store";
 
-export const login = (user) => {
-  return (dispatch) => {
+export interface ILoginUserAction {
+  type: typeof LOGIN_USER;
+  user: TUser;
+}
+
+export interface IRegisterUserAction {
+  type: typeof REGISTER_USER;
+  user: TUser;
+}
+
+export interface ILogoutUserAction {
+  type: typeof LOGOUT_USER;
+}
+
+export interface IPasswordResetPendingAction {
+  type: typeof PASSWORD_RESET_PENDING;
+}
+
+export interface IClearPasswordResetAction {
+  type: typeof CLEAR_PASSWORD_RESET;
+}
+
+export interface ISetUserAction {
+  type: typeof SET_USER;
+  user: TUser;
+}
+
+export interface IUpdateUserAction {
+  type: typeof UPDATE_USER;
+  user: TUser;
+}
+
+export type TAuthActions =
+  | ILoginUserAction
+  | IRegisterUserAction
+  | ILogoutUserAction
+  | IPasswordResetPendingAction
+  | IClearPasswordResetAction
+  | ISetUserAction
+  | IUpdateUserAction;
+
+export const login = (user: TUser) => {
+  return (dispatch: AppDispatch) => {
     request("auth/login", {
       method: "POST",
       headers: {
@@ -34,8 +77,8 @@ export const login = (user) => {
       });
   };
 };
-export const register = (user) => {
-  return (dispatch) => {
+export const register = (user: TUser) => {
+  return (dispatch: AppDispatch) => {
     request("auth/register", {
       method: "POST",
       headers: {
@@ -62,7 +105,7 @@ export const register = (user) => {
 };
 
 export const logout = () => {
-  return (dispatch) => {
+  return (dispatch: AppDispatch) => {
     request("auth/logout", {
       method: "POST",
       headers: {
@@ -85,8 +128,8 @@ export const logout = () => {
   };
 };
 
-export const requestPasswordReset = (email) => {
-  return async (dispatch) => {
+export const requestPasswordReset = (email: string) => {
+  return async (dispatch: AppDispatch) => {
     await request("password-reset", {
       method: "POST",
       headers: {
@@ -96,7 +139,7 @@ export const requestPasswordReset = (email) => {
         email: email,
       }),
     })
-      .then((response) => {
+      .then((_response) => {
         dispatch({
           type: PASSWORD_RESET_PENDING,
         });
@@ -107,8 +150,8 @@ export const requestPasswordReset = (email) => {
   };
 };
 
-export const resetPassword = (password, token) => {
-  return async (dispatch) => {
+export const resetPassword = (password: string, token: string) => {
+  return async (dispatch: AppDispatch) => {
     await request("password-reset/reset", {
       method: "POST",
       headers: {
@@ -131,12 +174,12 @@ export const resetPassword = (password, token) => {
 };
 
 export const getUser = () => {
-  return async (dispatch) => {
+  return async (dispatch: AppDispatch) => {
     await requestWithTokenRefresh("auth/user", {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
-        "Authorization": localStorage.getItem("accessToken"),
+        Authorization: localStorage.getItem("accessToken")!,
       },
     })
       .then((response) => {
@@ -151,13 +194,13 @@ export const getUser = () => {
   };
 };
 
-export const updateUser = (user) => {
-  return (dispatch) => {
+export const updateUser = (user: TUser) => {
+  return (dispatch: AppDispatch) => {
     requestWithTokenRefresh("auth/user", {
       method: "PATCH",
       headers: {
         "Content-Type": "application/json",
-        "Authorization": localStorage.getItem("accessToken"),
+        Authorization: localStorage.getItem("accessToken")!,
       },
       body: JSON.stringify({
         name: user.name,

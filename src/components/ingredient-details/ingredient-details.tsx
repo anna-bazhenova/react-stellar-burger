@@ -1,12 +1,13 @@
 import { useParams } from "react-router";
 import styles from "./ingredient-details.module.css";
-import { useSelector } from "react-redux";
-import { TIngredient } from "../../utils/types";
+import { useAppSelector } from "../../hooks/redux-hooks";
 
 const IngredientDetails = () => {
-  const { id } = useParams()
-  
-  const allIngredients = useSelector((state: any) => state.availableIngredients.items) as TIngredient[];
+  const { id } = useParams();
+
+  const allIngredients = useAppSelector(
+    (state) => state.availableIngredients.items
+  );
   const ingredient = allIngredients.find((el) => el._id === id);
 
   if (!ingredient) {
@@ -20,7 +21,9 @@ const IngredientDetails = () => {
   return (
     <div>
       <img src={ingredient.image_large} alt={ingredient.name} />
-      <h4 className="text text_type_main-medium mt-4 mb-8">{ingredient.name}</h4>
+      <h4 className="text text_type_main-medium mt-4 mb-8">
+        {ingredient.name}
+      </h4>
       <ul className={`${styles.list} text_color_inactive`}>
         <li>
           <p className="text text_type_main-default">Калории,ккал</p>
@@ -36,11 +39,13 @@ const IngredientDetails = () => {
         </li>
         <li>
           <p className="text text_type_main-default">Углеводы, г</p>
-          <p className="text text_type_digits-default">{ingredient.carbohydrates}</p>
+          <p className="text text_type_digits-default">
+            {ingredient.carbohydrates}
+          </p>
         </li>
       </ul>
     </div>
   );
-}
+};
 
 export default IngredientDetails;

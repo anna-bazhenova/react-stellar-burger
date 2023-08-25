@@ -1,8 +1,7 @@
 import styles from "./app.module.css";
 import AppHeader from "../app-header/app-header";
 import { useEffect } from "react";
-import { useDispatch } from "react-redux";
-import { getIngredients } from "../../services/actions/api";
+import { getIngredients } from "../../services/actions/burger-actions";
 
 import { Routes, Route, useLocation, useNavigate } from 'react-router-dom';
 import { Login, Register, ForgotPassword, ResetPassword, Profile, Feed, Home, IngredientDetailsPage } from '../../pages';
@@ -11,10 +10,11 @@ import { Orders } from "../orders/orders";
 import { ProfileDetails } from "../profile-details/profile-details";
 import IngredientDetails from "../ingredient-details/ingredient-details";
 import Modal from "../modal/modal";
-import { getUser } from "../../services/actions/auth";
+import { getUser } from "../../services/actions/auth-actions";
+import { useAppDispatch } from "../../hooks/redux-hooks";
 
 const App = () => {
-  const dispatch = useDispatch()
+  const dispatch = useAppDispatch()
 
   const location = useLocation();
   const background = location.state?.background as Location | undefined;

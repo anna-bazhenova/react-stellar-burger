@@ -1,9 +1,9 @@
 import { ChangeEvent, FormEvent, useCallback, useState } from 'react';
-import { useDispatch, useSelector } from "react-redux";
 import { EmailInput, PasswordInput, Button } from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from '../form.module.css';
 import { useNavigate, useLocation, Link } from "react-router-dom"
-import {login} from "../../services/actions/auth"
+import {login} from "../../services/actions/auth-actions"
+import { useAppDispatch, useAppSelector } from '../../hooks/redux-hooks';
 
 
 const Login = () => {
@@ -13,11 +13,11 @@ const Login = () => {
     setValue({ ...form, [e.target.name]: e.target.value });
   };
 
-  const isAuthorized = useSelector((store: any) => store.auth.isAuthorized) as boolean;
+  const isAuthorized = useAppSelector((store) => store.auth.isAuthorized);
   
   const location = useLocation();
   const navigate = useNavigate();
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   const handleLogin = useCallback(
     (e: FormEvent) => {

@@ -2,40 +2,46 @@ import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
 import BurgerIngredient from "../burger-ingredient/burger-ingredient";
 import styles from "./burger-ingredients.module.css";
 import { useRef, useState } from "react";
-import { useSelector } from "react-redux";
 import { useModal } from "../../hooks/useModal";
 import Modal from "../modal/modal";
 import IngredientDetails from "../ingredient-details/ingredient-details";
 import { useLocation, useNavigate } from "react-router";
 import { TIngredient } from "../../utils/types";
+import { useAppSelector } from "../../hooks/redux-hooks";
 
 const BurgerIngredients = () => {
-  const [tab, setTab] = useState('bun');
-  
+  const [tab, setTab] = useState("bun");
+
   const { isModalOpen, closeModal } = useModal();
-  
-  const ingredients = useSelector((state: any) => state.availableIngredients.items) as TIngredient[]
-  
-  const buns = ingredients.filter((ingredient) => ingredient.type === 'bun');
-  const sauces = ingredients.filter((ingredient) => ingredient.type === 'sauce');
-  const mains = ingredients.filter((ingredient) => ingredient.type === 'main');
+
+  const ingredients = useAppSelector(
+    (state) => state.availableIngredients.items
+  );
+
+  const buns = ingredients.filter((ingredient) => ingredient.type === "bun");
+  const sauces = ingredients.filter(
+    (ingredient) => ingredient.type === "sauce"
+  );
+  const mains = ingredients.filter((ingredient) => ingredient.type === "main");
 
   const navigate = useNavigate();
   const location = useLocation();
-  
+
   const showDetails = (ingredient: TIngredient) => {
-    navigate(`/ingredients/${ingredient._id}`, {state: {background: location}})
-  }
+    navigate(`/ingredients/${ingredient._id}`, {
+      state: { background: location },
+    });
+  };
 
   const hideDetails = () => {
     closeModal();
-  }
+  };
 
-  const sectionRef = useRef<HTMLElement>(null)
-  const bunsRef = useRef<HTMLHeadingElement>(null)
-  const saucesRef = useRef<HTMLHeadingElement>(null)
-  const mainsRef = useRef<HTMLHeadingElement>(null)
-  
+  const sectionRef = useRef<HTMLElement>(null);
+  const bunsRef = useRef<HTMLHeadingElement>(null);
+  const saucesRef = useRef<HTMLHeadingElement>(null);
+  const mainsRef = useRef<HTMLHeadingElement>(null);
+
   const handleScroll = () => {
     const sectionRect = sectionRef.current!.getBoundingClientRect();
     const bunsRect = bunsRef.current!.getBoundingClientRect();
@@ -72,53 +78,91 @@ const BurgerIngredients = () => {
     }
 
     if (tab !== tabToSelect) {
-      setTab(tabToSelect)
+      setTab(tabToSelect);
     }
-
-  }
+  };
 
   return (
     <section ref={sectionRef}>
       <div className={styles.tab_block}>
-        <Tab value="bun" active={tab === 'bun'} onClick={() => bunsRef.current?.scrollIntoView()}>
+        <Tab
+          value="bun"
+          active={tab === "bun"}
+          onClick={() => bunsRef.current?.scrollIntoView()}
+        >
           Булки
         </Tab>
-        <Tab value="sauce" active={tab === 'sauce'} onClick={() => saucesRef.current?.scrollIntoView()}>
+        <Tab
+          value="sauce"
+          active={tab === "sauce"}
+          onClick={() => saucesRef.current?.scrollIntoView()}
+        >
           Соусы
         </Tab>
-        <Tab value="main" active={tab === 'main'} onClick={() => mainsRef.current?.scrollIntoView()}>
+        <Tab
+          value="main"
+          active={tab === "main"}
+          onClick={() => mainsRef.current?.scrollIntoView()}
+        >
           Начинки
         </Tab>
       </div>
-      <div className={`${styles.burger_ingredients} custom-scroll mt-10`} onScroll={handleScroll}>
-        <h2 id="buns" ref={bunsRef} className="text text_type_main-medium">Булки</h2>
+      <div
+        className={`${styles.burger_ingredients} custom-scroll mt-10`}
+        onScroll={handleScroll}
+      >
+        <h2 id="buns" ref={bunsRef} className="text text_type_main-medium">
+          Булки
+        </h2>
         <ul className={`${styles.list} pt-6 pl-4 pr-4`}>
           {buns.map((bun) => (
-            <BurgerIngredient key={bun._id} ingredient={bun} onClick={() => showDetails(bun)}/>
+            <BurgerIngredient
+              key={bun._id}
+              ingredient={bun}
+              onClick={() => showDetails(bun)}
+            />
           ))}
         </ul>
-        <h2 id="sauces" ref={saucesRef} className="text text_type_main-medium mt-10">Соусы</h2>
+        <h2
+          id="sauces"
+          ref={saucesRef}
+          className="text text_type_main-medium mt-10"
+        >
+          Соусы
+        </h2>
         <ul className={`${styles.list} pt-6 pl-4 pr-4`}>
           {sauces.map((sauce) => (
-            <BurgerIngredient key={sauce._id} ingredient={sauce} onClick={() => showDetails(sauce)}/>
+            <BurgerIngredient
+              key={sauce._id}
+              ingredient={sauce}
+              onClick={() => showDetails(sauce)}
+            />
           ))}
         </ul>
-        <h2 id="mains" ref={mainsRef} className="text text_type_main-medium mt-10">Начинки</h2>
+        <h2
+          id="mains"
+          ref={mainsRef}
+          className="text text_type_main-medium mt-10"
+        >
+          Начинки
+        </h2>
         <ul className={`${styles.list} pt-6 pl-4 pr-4`}>
           {mains.map((main) => (
-            <BurgerIngredient key={main._id} ingredient={main} onClick={() => showDetails(main)}/>
+            <BurgerIngredient
+              key={main._id}
+              ingredient={main}
+              onClick={() => showDetails(main)}
+            />
           ))}
         </ul>
       </div>
-      {isModalOpen && 
-      <Modal
-        header={"Детали ингредиента"}
-        onClose={hideDetails}>
-        <IngredientDetails/>
-      </Modal>
-      }
+      {isModalOpen && (
+        <Modal header={"Детали ингредиента"} onClose={hideDetails}>
+          <IngredientDetails />
+        </Modal>
+      )}
     </section>
   );
-}
+};
 
 export default BurgerIngredients;

@@ -1,3 +1,4 @@
+import { TOrderActions } from "../actions/order-actions";
 import {
   CLEAR_ORDER_ID,
   PLACE_ORDER_ERROR,
@@ -5,11 +6,18 @@ import {
   PLACE_ORDER_SUSSESS,
 } from "../constants";
 
-const initialState = {
+type TOrderState = {
+  orderId: number | null;
+};
+
+const initialState: TOrderState = {
   orderId: null,
 };
 
-export const orderDetailsReducer = (state = initialState, action) => {
+export const orderDetailsReducer = (
+  state = initialState,
+  action: TOrderActions
+) => {
   switch (action.type) {
     case PLACE_ORDER_REQUEST: {
       return state;
