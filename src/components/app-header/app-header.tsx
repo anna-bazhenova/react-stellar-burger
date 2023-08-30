@@ -6,9 +6,9 @@ const AppHeader = () => {
   return (
     <header className={`${styles.header} text text_type_main-default p-4`}>
       <div className={styles.menu_container}>
-        <div className={styles.logo}>
+        <NavLink to="/" className={styles.logo}>
           <Logo />
-        </div>
+        </NavLink>
         <nav className={styles.navigation_block}>
           <ul className={styles.list}>
             <li className={`${styles.list_item} p-5 mr-2`}>

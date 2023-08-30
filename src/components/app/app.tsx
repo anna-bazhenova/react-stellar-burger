@@ -6,12 +6,12 @@ import { getIngredients } from "../../services/actions/burger-actions";
 import { Routes, Route, useLocation, useNavigate } from 'react-router-dom';
 import { Login, Register, ForgotPassword, ResetPassword, Profile, Feed, Home, IngredientDetailsPage } from '../../pages';
 import { OnlyUnauthenticated, OnlyAuthenticated } from "../protected-route";
-import { Orders } from "../orders/orders";
 import { ProfileDetails } from "../profile-details/profile-details";
 import IngredientDetails from "../ingredient-details/ingredient-details";
 import Modal from "../modal/modal";
 import { getUser } from "../../services/actions/auth-actions";
 import { useAppDispatch } from "../../hooks/redux-hooks";
+import { FeedOrders } from "../feed-orders/feed-orders";
 
 const App = () => {
   const dispatch = useAppDispatch()
@@ -41,17 +41,25 @@ const App = () => {
           <Route path="reset-password" element={<OnlyUnauthenticated element={< ResetPassword />}/>} />
           <Route path="profile" element={<OnlyAuthenticated element={< Profile />}/>}>
             <Route index element={< ProfileDetails />} />
-            <Route path="orders" element={< Orders />}>
-              <Route path=":id" />
-            </Route>
+            <Route path="orders" element={< FeedOrders />}/>
+            <Route path="orders/:id" element={< FeedId />}/>
           </Route>
-          <Route path="/feed" element={ < Feed />} />
+          <Route path="feed" element={ < Feed />}/>
+          <Route path="feed/:id" element={< FeedId />}/>
           <Route path="ingredients/:id" element={< IngredientDetailsPage />}/>
         </Routes>
         {background && (
         <Routes>
           <Route path="ingredients/:id" element={
             <Modal header={"Детали ингредиента"} onClose={() => navigate(-1)}>
+              <IngredientDetails/>
+            </Modal>} />
+            <Route path="orders/:id" element={
+            <Modal header={""} onClose={() => navigate(-1)}>
+              <IngredientDetails/>
+            </Modal>} />
+            <Route path="feed/:id" element={
+            <Modal header={""} onClose={() => navigate(-1)}>
               <IngredientDetails/>
             </Modal>} />
         </Routes>
