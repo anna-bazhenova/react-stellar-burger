@@ -51,15 +51,15 @@ const OrdersFeed = ({showOrderStatuses, basePath}: TOrdersFeedProps) => {
                   className="text text_type_main-default text_color_inactive"
                 />
               </div>
-              <h2 className="text text_type_main-medium mt-6 mb-6">
+              <h2 className="text text_type_main-medium mt-6">
                 {order.name}
               </h2>
               {showOrderStatuses && 
-                <p className={`${order.status === "done" && styles.status_title} text text_type_main-default mt-1 mb-6`}>
+                <p className={`${order.status === "done" && styles.status_title} text text_type_main-default mt-2`}>
                   {orderStatusMapping[order.status]}
                 </p>
               }
-              <div className={styles.order_flex}>
+              <div className={`${styles.order_flex} mt-6`}>
                 <div className={styles.images_flex}>
                   {order.ingredients.slice(0, 6).map((ingredientId, idx) => {
                     const className = `image_${idx + 1}`;
