@@ -4,14 +4,15 @@ import { useEffect } from "react";
 import { getIngredients } from "../../services/actions/burger-actions";
 
 import { Routes, Route, useLocation, useNavigate } from 'react-router-dom';
-import { Login, Register, ForgotPassword, ResetPassword, Profile, Feed, Home, IngredientDetailsPage } from '../../pages';
+import { Login, Register, ForgotPassword, ResetPassword, Profile, Feed, FeedIdPage, Home, IngredientDetailsPage } from '../../pages';
 import { OnlyUnauthenticated, OnlyAuthenticated } from "../protected-route";
 import { ProfileDetails } from "../profile-details/profile-details";
 import IngredientDetails from "../ingredient-details/ingredient-details";
 import Modal from "../modal/modal";
 import { getUser } from "../../services/actions/auth-actions";
 import { useAppDispatch } from "../../hooks/redux-hooks";
-import { FeedOrders } from "../feed-orders/feed-orders";
+import { FeedId } from "../feed-id/feed-id";
+import { OrdersHistory } from "../../pages/orders-history/orders-history";
 
 const App = () => {
   const dispatch = useAppDispatch()
@@ -41,11 +42,11 @@ const App = () => {
           <Route path="reset-password" element={<OnlyUnauthenticated element={< ResetPassword />}/>} />
           <Route path="profile" element={<OnlyAuthenticated element={< Profile />}/>}>
             <Route index element={< ProfileDetails />} />
-            <Route path="orders" element={< FeedOrders />}/>
-            <Route path="orders/:id" element={< FeedId />}/>
+            <Route path="orders" element={< OrdersHistory/>}/>
           </Route>
+          <Route path="profile/orders/:id" element={<OnlyAuthenticated element={< FeedIdPage />}/>}/>
           <Route path="feed" element={ < Feed />}/>
-          <Route path="feed/:id" element={< FeedId />}/>
+          <Route path="feed/:id" element={< FeedIdPage />}/>
           <Route path="ingredients/:id" element={< IngredientDetailsPage />}/>
         </Routes>
         {background && (
@@ -54,13 +55,13 @@ const App = () => {
             <Modal header={"Детали ингредиента"} onClose={() => navigate(-1)}>
               <IngredientDetails/>
             </Modal>} />
-            <Route path="orders/:id" element={
+          <Route path="/profile/orders/:id" element={
             <Modal header={""} onClose={() => navigate(-1)}>
-              <IngredientDetails/>
+              <FeedId/>
             </Modal>} />
-            <Route path="feed/:id" element={
+          <Route path="feed/:id" element={
             <Modal header={""} onClose={() => navigate(-1)}>
-              <IngredientDetails/>
+              <FeedId/>
             </Modal>} />
         </Routes>
         )}

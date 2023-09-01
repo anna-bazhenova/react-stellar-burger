@@ -86,3 +86,7 @@
 .images_flex {
   display: flex;
 }
+
+.status_title {
+  color: #00CCCC;
+}

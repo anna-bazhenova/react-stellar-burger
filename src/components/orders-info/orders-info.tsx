@@ -1,7 +1,9 @@
+import { useAppSelector } from "../../hooks/redux-hooks";
 import styles from "./orders-info.module.css";
 
+const OrdersInfo = () => {
 
-function OrdersInfo() {
+  const feed = useAppSelector((store) => store.feed.orderFeed);
 
   return (
     <div>
@@ -9,26 +11,24 @@ function OrdersInfo() {
         <div>
           <h3 className="text text_type_main-medium mb-6">Готовы:</h3>
           <ul className={`${styles.info_list} ${styles.list_color}`}>
-            <li className="text text_type_digits-default mb-2">034533</li>
-            <li className="text text_type_digits-default mb-2">034532</li>
-            <li className="text text_type_digits-default mb-2">034531</li>
-            <li className="text text_type_digits-default mb-2">034530</li>
-            <li className="text text_type_digits-default mb-2">034529</li>
+            {feed.orders.filter(order => order.status === 'done').slice(0, 10).map((order) => (
+              <li key={order._id} className="text text_type_digits-default mb-2">{order.number}</li>
+            ))}
           </ul>
         </div>
         <div>
           <h3 className="text text_type_main-medium mb-6">В работе:</h3>
           <ul className={styles.info_list}>
-            <li className="text text_type_digits-default mb-2">034538</li>
-            <li className="text text_type_digits-default mb-2">034539</li>
-            <li className="text text_type_digits-default mb-2">034540</li>
+            {feed.orders.filter(order => order.status === 'pending').slice(0, 10).map((order) => (
+              <li key={order._id} className="text text_type_digits-default mb-2">{order.number}</li>
+            ))}
           </ul>
         </div>
       </div>
       <h3 className="text text_type_main-medium mt-15">Выполнено за все время:</h3>
-      <p className={`${styles.text_shadow} text text_type_digits-large`}>28 752</p>
+      <p className={`${styles.text_shadow} text text_type_digits-large`}>{feed.total}</p>
       <h3 className="text text_type_main-medium mt-15">Выполнено за сегодня:</h3>
-      <p className={`${styles.text_shadow} text text_type_digits-large`}>138</p>
+      <p className={`${styles.text_shadow} text text_type_digits-large`}>{feed.totalToday}</p>
     </div>
   );
 }

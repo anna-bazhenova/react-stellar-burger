@@ -8,12 +8,12 @@ import {
   CLEAR_BURGER_INGREDIENTS,
 } from "../constants";
 
-import { TBurgerIngredient, TIngredient } from "../../utils/types";
+import { AppDispatch, TBurgerIngredient, TIngredient } from "../../utils/types";
 
 import { request } from "../../utils/request";
 
 import { nanoid } from "nanoid";
-import { AppDispatch } from "../store";
+
 
 export interface IGetIngredientsRequestAction {
   type: typeof GET_INGREDIENTS_REQUEST;

@@ -8,8 +8,7 @@ import {
   SET_USER,
 } from "../constants";
 import { request, requestWithTokenRefresh } from "../../utils/request";
-import { TUser } from "../../utils/types";
-import { AppDispatch } from "../store";
+import { TUser, AppDispatch } from "../../utils/types";
 
 export interface ILoginUserAction {
   type: typeof LOGIN_USER;

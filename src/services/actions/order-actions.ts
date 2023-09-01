@@ -1,4 +1,5 @@
 import { request } from "../../utils/request";
+import { AppDispatch } from "../../utils/types";
 import {
   CLEAR_ORDER_ID,
   PLACE_ORDER_REQUEST,
@@ -6,7 +7,6 @@ import {
   PLACE_ORDER_ERROR,
   CLEAR_BURGER_INGREDIENTS,
 } from "../constants";
-import { AppDispatch } from "../store";
 
 export interface IPlaceOrderRequestAction {
   type: typeof PLACE_ORDER_REQUEST;
@@ -39,6 +39,7 @@ export const placeOrder = (ingredientIds: string[]) => {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
+        Authorization: localStorage.getItem("accessToken")!,
       },
       body: JSON.stringify({
         ingredients: ingredientIds,
