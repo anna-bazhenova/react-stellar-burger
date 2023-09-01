@@ -18,7 +18,7 @@ const OrdersInfo = () => {
         </div>
         <div>
           <h3 className="text text_type_main-medium mb-6">В работе:</h3>
-          <ul className={styles.info_list}>
+          <ul className={`${styles.info_list}`}>
             {feed.orders.filter(order => order.status === 'pending').slice(0, 10).map((order) => (
               <li key={order._id} className="text text_type_digits-default mb-2">{order.number}</li>
             ))}

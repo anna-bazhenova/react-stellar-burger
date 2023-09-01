@@ -29,8 +29,6 @@ const FeedId = () => {
       });
     }
   }, [id, orders]);
-  
-  
 
   const orderStatusMapping = {
     "done": "Выполнен",
@@ -45,6 +43,15 @@ const FeedId = () => {
       </div>
     );
   }
+
+  const ingredientFrequencies = order.ingredients.reduce((frequencies, ingredient) => {
+    if (frequencies.has(ingredient)) {
+      frequencies.set(ingredient, frequencies.get(ingredient) + 1);
+    } else {
+      frequencies.set(ingredient, 1);
+    }
+    return frequencies;   
+  }, new Map())
 
   return (
     <div className={styles.id_container}>
@@ -73,8 +80,10 @@ const FeedId = () => {
             </div>
             <div className={styles.price_flex}>
               <p className="text text_type_digits-default mr-2">
-                {ingredientsById.get(ingredientId)?.type === "bun" ? 2 : 1} x{" "}
-                {ingredientsById.get(ingredientId)?.price}
+                {ingredientsById.get(ingredientId)?.type === "bun"
+                  ? 2
+                  : ingredientFrequencies.get(ingredientId)}
+                x {ingredientsById.get(ingredientId)?.price}
               </p>
               <CurrencyIcon type="primary" />
             </div>
