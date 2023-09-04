@@ -36,10 +36,10 @@ const Modal = ({ children, header, onClose }: TModalProps) => {
   
   return createPortal(
     <ModalOverlay onClick={closeModalOnOverlayClick}>
-      <div className={`${styles.modal} pl-10 pr-10 pt-10 pb-15`}>
+      <div className={`${styles.modal} pl-10 pr-10 pt-10 pb-15`} data-cy="modal">
         <div className={styles.header_container}>
           <h3 className="text text_type_main-large">{header}</h3>
-          <button className={styles.button_close} onClick={onClose}>
+          <button className={styles.button_close} onClick={onClose} data-cy="modal-close-button">
             <CloseIcon type="primary" />
           </button>
         </div>
