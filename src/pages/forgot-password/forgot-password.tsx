@@ -1,24 +1,21 @@
-import React, { ChangeEvent, FormEvent } from 'react';
+import { FormEvent } from 'react';
 import { EmailInput, Button } from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from '../form.module.css';
 import { Link, useNavigate } from 'react-router-dom';
 import { requestPasswordReset } from '../../services/actions/auth-actions';
 import { useAppDispatch } from '../../hooks/redux-hooks';
+import { useForm } from '../../hooks/useForm';
 
 
 const ForgotPassword = () => {
   const navigate = useNavigate();
-  const [email, setEmail] = React.useState("");
-
-  const onEmailChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setEmail(e.target.value);
-  };
+  const {form, handleChange } = useForm({email: ""})
 
   const dispatch = useAppDispatch()
 
   const handleSubmit = async (event: FormEvent) => {
     event.preventDefault();
-    await dispatch(requestPasswordReset(email));
+    await dispatch(requestPasswordReset(form.email));
     navigate("/reset-password", { replace: true });
   };
 
@@ -28,8 +25,8 @@ const ForgotPassword = () => {
         <form onSubmit={handleSubmit}>
           <h1 className="text text_type_main-medium">Восстановление пароля</h1>
           <EmailInput
-            onChange={onEmailChange}
-            value={email}
+            onChange={handleChange}
+            value={form.email}
             name={'email'}
             isIcon={false}
             placeholder={'Укажите e-mail'}

@@ -46,12 +46,12 @@ const FeedId = () => {
 
   const ingredientFrequencies = order.ingredients.reduce((frequencies, ingredient) => {
     if (frequencies.has(ingredient)) {
-      frequencies.set(ingredient, frequencies.get(ingredient) + 1);
+      frequencies.set(ingredient, frequencies.get(ingredient)! + 1);
     } else {
       frequencies.set(ingredient, 1);
     }
     return frequencies;   
-  }, new Map())
+  }, new Map<string, number>())
 
   return (
     <div className={styles.id_container}>
@@ -64,8 +64,8 @@ const FeedId = () => {
       </p>
       <h3 className="text text_type_main-medium mb-6">Состав:</h3>
       <ul className={`${styles.item_list} custom-scroll mb-10`}>
-        {order.ingredients.map((ingredientId) => (
-          <li className={styles.item_flex}>
+        {[...ingredientFrequencies.keys()].map((ingredientId) => (
+          <li className={styles.item_flex} key={ingredientId}>
             <div className={styles.image_flex}>
               <div className={styles.image_box}>
                 <img

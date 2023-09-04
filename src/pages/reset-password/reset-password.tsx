@@ -1,17 +1,15 @@
-import { ChangeEvent, FormEvent, useState } from 'react';
+import { FormEvent } from 'react';
 import { PasswordInput, Button, Input } from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from '../form.module.css';
 import { Navigate, useNavigate } from 'react-router';
 import { resetPassword } from '../../services/actions/auth-actions';
 import { useAppDispatch, useAppSelector } from '../../hooks/redux-hooks';
+import { useForm } from '../../hooks/useForm';
 
 
 const ResetPassword = () => {
   
-  const [form, setValue] = useState({ token: "", password: "" });
-  const onFromChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setValue({ ...form, [e.target.name]: e.target.value });
-  };
+  const {form, handleChange } = useForm({ token: "", password: "" });
 
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
@@ -34,7 +32,7 @@ const ResetPassword = () => {
         <form onSubmit={handleResetPassword}>
           <h1 className="text text_type_main-medium">Восстановление пароля</h1>
           <PasswordInput
-            onChange={onFromChange}
+            onChange={handleChange}
             value={form.password}
             name={'password'}
             extraClass="mb-6 mt-6"
@@ -43,7 +41,7 @@ const ResetPassword = () => {
           <Input
             type={'text'}
             placeholder={'Введите код из письма'}
-            onChange={onFromChange}
+            onChange={handleChange}
             value={form.token}
             name={'token'}
             error={false}

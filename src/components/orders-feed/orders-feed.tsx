@@ -64,7 +64,7 @@ const OrdersFeed = ({showOrderStatuses, basePath}: TOrdersFeedProps) => {
                   {order.ingredients.slice(0, 6).map((ingredientId, idx) => {
                     const className = `image_${idx + 1}`;
                     return (
-                      <div key={nanoid()} className={`${styles.image_box} ${styles[className]}`}>
+                      <div key={idx} className={`${styles.image_box} ${styles[className]}`}>
                         <img
                           className={styles.image}
                           src={ingredientsById.get(ingredientId)?.image_mobile}

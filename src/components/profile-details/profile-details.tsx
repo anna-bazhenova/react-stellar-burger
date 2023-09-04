@@ -8,24 +8,25 @@ import {
 import { updateUser } from "../../services/actions/auth-actions";
 import styles from "./profile-details.module.css";
 import { useAppDispatch, useAppSelector } from "../../hooks/redux-hooks";
+import { useForm } from "../../hooks/useForm";
 
 const ProfileDetails = () => {
   const user = useAppSelector((store) => store.auth.user!);
 
-  const [form, setValue] = useState({
+  const {form, setValues} = useForm({
     name: "",
     password: "",
     email: "",
   });
 
   useEffect(() => {
-    setValue({ name: user.name!, password: "", email: user.email });
-  }, [user]);
+    setValues({ name: user.name!, password: "", email: user.email });
+  }, [user, setValues]);
 
   const [changed, setChanged] = useState(false);
 
   const onChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setValue({ ...form, [e.target.name]: e.target.value });
+    setValues({ ...form, [e.target.name]: e.target.value });
     setChanged(true);
   };
 
@@ -37,7 +38,7 @@ const ProfileDetails = () => {
   };
 
   const handleReset = () => {
-    setValue({ name: user.name!, password: "", email: user.email });
+    setValues({ name: user.name!, password: "", email: user.email });
     setChanged(false);
   };
 

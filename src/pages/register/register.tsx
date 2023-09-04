@@ -1,16 +1,14 @@
-import { ChangeEvent, FormEvent, useState } from 'react';
+import { FormEvent } from 'react';
 import { EmailInput, PasswordInput, Button, Input } from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from '../form.module.css';
 import { register } from '../../services/actions/auth-actions';
 import { useAppDispatch } from '../../hooks/redux-hooks';
+import { useForm } from '../../hooks/useForm';
 
 
 const Register = () => {
   
-  const [form, setValue] = useState({ name: "", email: "", password: "" });
-  const onFromChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setValue({ ...form, [e.target.name]: e.target.value });
-  };
+  const {form, handleChange } = useForm({ name: "", email: "", password: "" });
 
   const dispatch = useAppDispatch();
   const handleUserRegistration = (e: FormEvent) => {
@@ -26,7 +24,7 @@ const Register = () => {
           <Input
             type={'text'}
             placeholder={'Имя'}
-            onChange={onFromChange}
+            onChange={handleChange}
             value={form.name}
             name={'name'}
             error={false}
@@ -35,14 +33,14 @@ const Register = () => {
             extraClass="mt-6"
           />
           <EmailInput
-            onChange={onFromChange}
+            onChange={handleChange}
             value={form.email}
             name={'email'}
             isIcon={false}
             extraClass="mt-6"
           />
           <PasswordInput
-            onChange={onFromChange}
+            onChange={handleChange}
             value={form.password}
             name={'password'}
             extraClass="mb-6 mt-6"
