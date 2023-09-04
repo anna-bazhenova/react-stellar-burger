@@ -10,7 +10,7 @@ import { store } from "./services/store";
 ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>
-      <BrowserRouter>
+      <BrowserRouter basename="/react-stellar-burger">
         <App />
       </BrowserRouter>
     </Provider>
