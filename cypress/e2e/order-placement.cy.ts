@@ -5,7 +5,7 @@ describe("Order creation", () => {
   const password = "123456";
 
   it("should place order", () => {
-    cy.visit(`http://localhost:3000/login`);
+    cy.visit(`http://localhost:3000/react-stellar-burger/login`);
 
     cy.get(selectors.loginEmail).type(email);
     cy.get(selectors.loginPassword).type(password);
