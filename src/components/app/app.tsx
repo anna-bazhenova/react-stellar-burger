@@ -1,20 +1,21 @@
 import styles from "./app.module.css";
 import AppHeader from "../app-header/app-header";
 import { useEffect } from "react";
-import { useDispatch } from "react-redux";
-import { getIngredients } from "../../services/actions/api";
+import { getIngredients } from "../../services/actions/burger-actions";
 
 import { Routes, Route, useLocation, useNavigate } from 'react-router-dom';
-import { Login, Register, ForgotPassword, ResetPassword, Profile, Feed, Home, IngredientDetailsPage } from '../../pages';
+import { Login, Register, ForgotPassword, ResetPassword, Profile, Feed, FeedIdPage, Home, IngredientDetailsPage } from '../../pages';
 import { OnlyUnauthenticated, OnlyAuthenticated } from "../protected-route";
-import { Orders } from "../orders/orders";
 import { ProfileDetails } from "../profile-details/profile-details";
 import IngredientDetails from "../ingredient-details/ingredient-details";
 import Modal from "../modal/modal";
-import { getUser } from "../../services/actions/auth";
+import { getUser } from "../../services/actions/auth-actions";
+import { useAppDispatch } from "../../hooks/redux-hooks";
+import { FeedId } from "../feed-id/feed-id";
+import { OrdersHistory } from "../../pages/orders-history/orders-history";
 
 const App = () => {
-  const dispatch = useDispatch()
+  const dispatch = useAppDispatch()
 
   const location = useLocation();
   const background = location.state?.background as Location | undefined;
@@ -41,11 +42,11 @@ const App = () => {
           <Route path="reset-password" element={<OnlyUnauthenticated element={< ResetPassword />}/>} />
           <Route path="profile" element={<OnlyAuthenticated element={< Profile />}/>}>
             <Route index element={< ProfileDetails />} />
-            <Route path="orders" element={< Orders />}>
-              <Route path=":id" />
-            </Route>
+            <Route path="orders" element={< OrdersHistory/>}/>
           </Route>
-          <Route path="/feed" element={ < Feed />} />
+          <Route path="profile/orders/:id" element={<OnlyAuthenticated element={< FeedIdPage />}/>}/>
+          <Route path="feed" element={ < Feed />}/>
+          <Route path="feed/:id" element={< FeedIdPage />}/>
           <Route path="ingredients/:id" element={< IngredientDetailsPage />}/>
         </Routes>
         {background && (
@@ -53,6 +54,14 @@ const App = () => {
           <Route path="ingredients/:id" element={
             <Modal header={"Детали ингредиента"} onClose={() => navigate(-1)}>
               <IngredientDetails/>
+            </Modal>} />
+          <Route path="/profile/orders/:id" element={
+            <Modal header={""} onClose={() => navigate(-1)}>
+              <FeedId/>
+            </Modal>} />
+          <Route path="feed/:id" element={
+            <Modal header={""} onClose={() => navigate(-1)}>
+              <FeedId/>
             </Modal>} />
         </Routes>
         )}

@@ -1,0 +1,10 @@
+.feed_container {
+  display: grid;
+  grid-template-columns: 50% 2fr;
+  column-gap: 60px;
+}
+
+.feed_page {
+  max-width: 1280px;
+  margin: 0 auto;
+}

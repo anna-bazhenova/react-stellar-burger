@@ -7,50 +7,34 @@ import styles from "./burger-constructor.module.css";
 import Modal from "../modal/modal";
 import OrderDetails from "../order-details/order-details";
 import { useModal } from "../../hooks/useModal";
-import { useDispatch, useSelector } from "react-redux";
-import { clearOrderId } from "../../services/actions/order-details";
+import { clearOrderId, placeOrder } from "../../services/actions/order-actions";
 import { useDrop } from "react-dnd";
-import {
-  addBurgerIngredient,
-  removeBurgedIngredient,
-} from "../../services/actions/burger-constructor";
 import { useMemo, useCallback } from "react";
-import { placeOrder } from "../../services/actions/api";
 import loaderImage from "../../images/circles.svg";
-import { moveBurgerIngredient } from "../../services/actions/burger-constructor";
 import { useNavigate } from "react-router";
-import { TBurgerIngredient, TIngredient } from "../../utils/types";
 import BurgerConstructorElement from "../burger-constructor-element/burger-constructor-element";
-
-type TBurgerIngredients = {
-  bun: TBurgerIngredient;
-  ingredients: TBurgerIngredient[];
-};
+import { addBurgerIngredient, moveBurgerIngredient, removeBurgedIngredient } from "../../services/actions/burger-actions";
+import { useAppDispatch, useAppSelector } from "../../hooks/redux-hooks";
 
 type TDropItem = {
   id: string;
 };
 
 const BurgerConstructor = () => {
-  const { burgerIngredients, availableIngredients } = useSelector(
-    (state: any) => {
+  const { burgerIngredients, availableIngredients } = useAppSelector(
+    (state) => {
       return {
         burgerIngredients: state.burgerIngredients,
         availableIngredients: state.availableIngredients.items,
       };
     }
-  ) as {
-    burgerIngredients: TBurgerIngredients;
-    availableIngredients: TIngredient[];
-  };
+  );
 
   const { isModalOpen, openModal, closeModal } = useModal();
 
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const navigate = useNavigate();
-  const isAuthorized = useSelector(
-    (store: any) => store.auth.isAuthorized
-  ) as boolean;
+  const isAuthorized = useAppSelector((store) => store.auth.isAuthorized);
 
   const orderBurger = async () => {
     if (isAuthorized) {
@@ -68,7 +52,7 @@ const BurgerConstructor = () => {
 
   const burgerIngredientIds = () => {
     const ingredientIds = burgerIngredients.ingredients.map((it) => it._id);
-    return [...ingredientIds, burgerIngredients.bun._id];
+    return [...ingredientIds, burgerIngredients.bun!._id];
   };
 
   const handleIngredientDrop = (item: TDropItem) => {
@@ -96,7 +80,7 @@ const BurgerConstructor = () => {
       burgerIngredients.ingredients.reduce(
         (acc, ingredient) => acc + ingredient.price,
         0
-      ) + (burgerIngredients.bun.price ? burgerIngredients.bun.price * 2 : 0),
+      ) + (burgerIngredients.bun?.price ? burgerIngredients.bun.price * 2 : 0),
     [burgerIngredients]
   );
 
@@ -114,17 +98,15 @@ const BurgerConstructor = () => {
   return (
     <section ref={dropRef}>
       <ul className={styles.burger_list}>
-        {bun && (
-          <li className="ml-8">
-            <ConstructorElement
-              type="top"
-              isLocked={true}
-              text={`${bun.name || "Перетяните булку"} (верх)`}
-              price={bun.price || 0}
-              thumbnail={bun.image || loaderImage}
-            />
-          </li>
-        )}
+        <li className="ml-8">
+          <ConstructorElement
+            type="top"
+            isLocked={true}
+            text={`${bun?.name || "Перетяните булку"} (верх)`}
+            price={bun?.price || 0}
+            thumbnail={bun?.image || loaderImage}
+          />
+        </li>
         <li>
           <ul className={`${styles.mains_list} custom-scroll`}>
             {otherIngredients.map((ingredient, idx) => (
@@ -140,17 +122,15 @@ const BurgerConstructor = () => {
             ))}
           </ul>
         </li>
-        {bun && (
-          <li className="ml-8">
-            <ConstructorElement
-              type="bottom"
-              isLocked={true}
-              text={`${bun.name || "Перетяните булку"} (низ)`}
-              price={bun.price || 0}
-              thumbnail={bun.image || loaderImage}
-            />
-          </li>
-        )}
+        <li className="ml-8">
+          <ConstructorElement
+            type="bottom"
+            isLocked={true}
+            text={`${bun?.name || "Перетяните булку"} (низ)`}
+            price={bun?.price || 0}
+            thumbnail={bun?.image || loaderImage}
+          />
+        </li>
       </ul>
       <div className={`${styles.order_container} mt-10`}>
         <div className={styles.sum_container}>
@@ -162,7 +142,7 @@ const BurgerConstructor = () => {
           type="primary"
           size="large"
           onClick={orderBurger}
-          disabled={Object.keys(bun).length === 0}
+          disabled={bun === null}
         >
           Оформить заказ
         </Button>

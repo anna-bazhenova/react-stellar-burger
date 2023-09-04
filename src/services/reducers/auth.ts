@@ -1,3 +1,5 @@
+import { TUser } from "../../utils/types";
+import { TAuthActions } from "../actions/auth-actions";
 import {
   CLEAR_PASSWORD_RESET,
   LOGIN_USER,
@@ -8,13 +10,19 @@ import {
   UPDATE_USER,
 } from "../constants";
 
-const initialState = {
+type TAuthState = {
+  user: TUser | null;
+  isAuthorized: boolean;
+  isPasswordResetPending: boolean;
+};
+
+const initialState: TAuthState = {
   user: null,
   isAuthorized: false,
   isPasswordResetPending: false,
 };
 
-export const authReducer = (state = initialState, action) => {
+export const authReducer = (state = initialState, action: TAuthActions) => {
   switch (action.type) {
     case LOGIN_USER:
       return {

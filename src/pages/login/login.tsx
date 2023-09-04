@@ -1,23 +1,20 @@
-import { ChangeEvent, FormEvent, useCallback, useState } from 'react';
-import { useDispatch, useSelector } from "react-redux";
+import { FormEvent, useCallback } from 'react';
 import { EmailInput, PasswordInput, Button } from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from '../form.module.css';
 import { useNavigate, useLocation, Link } from "react-router-dom"
-import {login} from "../../services/actions/auth"
+import {login} from "../../services/actions/auth-actions"
+import { useAppDispatch, useAppSelector } from '../../hooks/redux-hooks';
+import { useForm } from '../../hooks/useForm';
 
 
 const Login = () => {
-  const [form, setValue] = useState({ email: "", password: "" });
-  
-  const onFromChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setValue({ ...form, [e.target.name]: e.target.value });
-  };
+  const {form, handleChange } = useForm({ email: "", password: "" });
 
-  const isAuthorized = useSelector((store: any) => store.auth.isAuthorized) as boolean;
+  const isAuthorized = useAppSelector((store) => store.auth.isAuthorized);
   
   const location = useLocation();
   const navigate = useNavigate();
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   const handleLogin = useCallback(
     (e: FormEvent) => {
@@ -37,14 +34,14 @@ const Login = () => {
         <form onSubmit={handleLogin}>
           <h1 className="text text_type_main-medium">Вход</h1>
           <EmailInput
-            onChange={onFromChange}
+            onChange={handleChange}
             name={'email'}
             isIcon={false}
             extraClass="mt-6"
             value={form.email}
           />
           <PasswordInput
-            onChange={onFromChange}
+            onChange={handleChange}
             name={'password'}
             extraClass="mb-6 mt-6"
             value={form.password}

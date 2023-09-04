@@ -1,7 +1,7 @@
 import { NavLink, Outlet } from 'react-router-dom';
 import styles from './profile.module.css'
-import { useDispatch } from "react-redux";
-import { logout } from "../../services/actions/auth";
+import { logout } from "../../services/actions/auth-actions";
+import { useAppDispatch } from '../../hooks/redux-hooks';
 
 
 const Profile = () => {
@@ -10,7 +10,7 @@ const Profile = () => {
     return isActive ? `${styles.link} text text_type_main-medium text_color_primary mb-6` : `${styles.link} text text_type_main-medium text_color_inactive mb-6`
   }
 
-  const dispatch = useDispatch()
+  const dispatch = useAppDispatch()
 
   const handleLogout = () => {
     dispatch(logout());
