@@ -12,7 +12,7 @@ type TState = {
   orderFeed: TOrderFeed;
 };
 
-const initialState: TState = {
+export const initialState: TState = {
   wsConnected: false,
   orderFeed: {
     success: false,

@@ -1,16 +1,12 @@
-import {
-  TOrderActions,
-  clearOrderId,
-  placeOrder,
-} from "../actions/order-actions";
+import { TOrderActions, clearOrderId } from "../actions/order-actions";
 import { PLACE_ORDER_SUSSESS } from "../constants";
-import { orderDetailsReducer } from "./order-details";
+import { initialState, orderDetailsReducer } from "./order-details";
 
 describe("Order Details reducer", () => {
   it("should return initial state", () => {
-    expect(orderDetailsReducer(undefined, {} as TOrderActions)).toEqual({
-      orderId: null,
-    });
+    expect(orderDetailsReducer(undefined, {} as TOrderActions)).toEqual(
+      initialState
+    );
   });
 
   it("should place order", () => {
@@ -27,8 +23,8 @@ describe("Order Details reducer", () => {
 
   it("should clear order id", () => {
     const orderId = 1234;
-    expect(orderDetailsReducer({ orderId: orderId }, clearOrderId())).toEqual({
-      orderId: null,
-    });
+    expect(orderDetailsReducer({ orderId: orderId }, clearOrderId())).toEqual(
+      initialState
+    );
   });
 });

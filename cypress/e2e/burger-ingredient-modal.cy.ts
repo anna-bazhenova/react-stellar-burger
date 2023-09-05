@@ -2,7 +2,7 @@ import { selectors } from "./selectors";
 
 describe("Burger ingredient modal open and close", function () {
   beforeEach(() => {
-    cy.visit("http://localhost:3000/react-stellar-burger");
+    cy.visit("/");
   });
 
   it("should open modal on ingredient click", () => {

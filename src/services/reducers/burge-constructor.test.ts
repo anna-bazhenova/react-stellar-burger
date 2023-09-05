@@ -5,7 +5,7 @@ import {
   removeBurgedIngredient,
 } from "../actions/burger-actions";
 import { CLEAR_BURGER_INGREDIENTS } from "../constants";
-import { burgerConstrustorReducer } from "./burger-constructor";
+import { burgerConstrustorReducer, initialState } from "./burger-constructor";
 
 const uniqueId = "super duper unique id";
 jest.mock("nanoid", () => {
@@ -60,10 +60,9 @@ const ingredients = [
 
 describe("Burger constructor reducer", () => {
   it("should return initial state", () => {
-    expect(burgerConstrustorReducer(undefined, {} as TBurgerActions)).toEqual({
-      bun: null,
-      ingredients: [],
-    });
+    expect(burgerConstrustorReducer(undefined, {} as TBurgerActions)).toEqual(
+      initialState
+    );
   });
 
   it("should add bun", () => {
@@ -134,9 +133,6 @@ describe("Burger constructor reducer", () => {
           type: CLEAR_BURGER_INGREDIENTS,
         }
       )
-    ).toEqual({
-      bun: null,
-      ingredients: [],
-    });
+    ).toEqual(initialState);
   });
 });

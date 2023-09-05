@@ -1,7 +1,7 @@
 import { TOrderFeed } from "../../utils/types";
 import { TWSActions } from "../actions/ws-actions";
 import { WS_CONNECTION_SUCCESS, WS_GET_MESSAGE } from "../constants";
-import { orderFeedReducer } from "./orders-feed";
+import { initialState, orderFeedReducer } from "./orders-feed";
 
 const wsMessage: TOrderFeed = {
   success: true,
@@ -22,28 +22,15 @@ const wsMessage: TOrderFeed = {
 
 describe("Order Feed Reducer", () => {
   it("should return initial state", () => {
-    expect(orderFeedReducer(undefined, {} as TWSActions)).toEqual({
-      wsConnected: false,
-      orderFeed: {
-        success: false,
-        orders: [],
-        total: 0,
-        totalToday: 0,
-      },
-    });
+    expect(orderFeedReducer(undefined, {} as TWSActions)).toEqual(initialState);
   });
 
   it("should set connected flag", () => {
     expect(
       orderFeedReducer(undefined, { type: WS_CONNECTION_SUCCESS })
     ).toEqual({
+      ...initialState,
       wsConnected: true,
-      orderFeed: {
-        success: false,
-        orders: [],
-        total: 0,
-        totalToday: 0,
-      },
     });
   });
 
@@ -51,7 +38,7 @@ describe("Order Feed Reducer", () => {
     expect(
       orderFeedReducer(undefined, { type: WS_GET_MESSAGE, payload: wsMessage })
     ).toEqual({
-      wsConnected: false,
+      ...initialState,
       orderFeed: wsMessage,
     });
   });

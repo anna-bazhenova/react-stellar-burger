@@ -7,61 +7,45 @@ import {
   PASSWORD_RESET_PENDING,
   REGISTER_USER,
 } from "../constants";
-import { authReducer } from "./auth";
+import { authReducer, initialState } from "./auth";
 
 const user: TUser = {
   name: "some name",
   email: "some@email.com",
 };
 
+const userAuthorizedState = {
+  user: user,
+  isAuthorized: true,
+  isPasswordResetPending: false,
+};
+
 describe("Auth reducer", () => {
   it("should return initial state", () => {
-    expect(authReducer(undefined, {} as TAuthActions)).toEqual({
-      user: null,
-      isAuthorized: false,
-      isPasswordResetPending: false,
-    });
+    expect(authReducer(undefined, {} as TAuthActions)).toEqual(initialState);
   });
 
   it("should login user", () => {
-    expect(authReducer(undefined, { type: LOGIN_USER, user: user })).toEqual({
-      user: user,
-      isAuthorized: true,
-      isPasswordResetPending: false,
-    });
+    expect(authReducer(undefined, { type: LOGIN_USER, user: user })).toEqual(
+      userAuthorizedState
+    );
   });
 
   it("should register user", () => {
     expect(authReducer(undefined, { type: REGISTER_USER, user: user })).toEqual(
-      {
-        user: user,
-        isAuthorized: true,
-        isPasswordResetPending: false,
-      }
+      userAuthorizedState
     );
   });
 
   it("should logout user", () => {
-    expect(
-      authReducer(
-        {
-          user: user,
-          isAuthorized: true,
-          isPasswordResetPending: false,
-        },
-        { type: LOGOUT_USER }
-      )
-    ).toEqual({
-      user: null,
-      isAuthorized: false,
-      isPasswordResetPending: false,
-    });
+    expect(authReducer(userAuthorizedState, { type: LOGOUT_USER })).toEqual(
+      initialState
+    );
   });
 
   it("should set password reset flag", () => {
     expect(authReducer(undefined, { type: PASSWORD_RESET_PENDING })).toEqual({
-      user: null,
-      isAuthorized: false,
+      ...initialState,
       isPasswordResetPending: true,
     });
   });
@@ -70,16 +54,11 @@ describe("Auth reducer", () => {
     expect(
       authReducer(
         {
-          user: user,
-          isAuthorized: false,
+          ...initialState,
           isPasswordResetPending: true,
         },
         { type: CLEAR_PASSWORD_RESET }
       )
-    ).toEqual({
-      user: user,
-      isAuthorized: false,
-      isPasswordResetPending: false,
-    });
+    ).toEqual(initialState);
   });
 });

@@ -4,7 +4,7 @@ import {
   GET_INGREDIENTS_REQUEST,
   GET_INGREDIENTS_SUCCESS,
 } from "../constants";
-import { burgerIngredientsReducer } from "./burger-ingredients";
+import { burgerIngredientsReducer, initialState } from "./burger-ingredients";
 
 const ingredients = [
   {
@@ -39,20 +39,17 @@ const ingredients = [
 
 describe("Burger ingredients reducer", () => {
   it("should return initial state", () => {
-    expect(burgerIngredientsReducer(undefined, {} as TBurgerActions)).toEqual({
-      items: [],
-      itemsRequesting: false,
-      itemsRequestFailed: false,
-    });
+    expect(burgerIngredientsReducer(undefined, {} as TBurgerActions)).toEqual(
+      initialState
+    );
   });
 
   it("should set requesting flag", () => {
     expect(
       burgerIngredientsReducer(undefined, { type: GET_INGREDIENTS_REQUEST })
     ).toEqual({
-      items: [],
+      ...initialState,
       itemsRequesting: true,
-      itemsRequestFailed: false,
     });
   });
 
@@ -63,9 +60,8 @@ describe("Burger ingredients reducer", () => {
         ingredients: ingredients,
       })
     ).toEqual({
+      ...initialState,
       items: ingredients,
-      itemsRequesting: false,
-      itemsRequestFailed: false,
     });
   });
 
@@ -73,8 +69,7 @@ describe("Burger ingredients reducer", () => {
     expect(
       burgerIngredientsReducer(undefined, { type: GET_INGREDIENTS_ERROR })
     ).toEqual({
-      items: [],
-      itemsRequesting: false,
+      ...initialState,
       itemsRequestFailed: true,
     });
   });
