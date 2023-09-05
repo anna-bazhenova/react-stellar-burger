@@ -41,7 +41,7 @@ const BurgerConstructor = () => {
       await dispatch(placeOrder(burgerIngredientIds()));
       openModal();
     } else {
-      navigate("login", { replace: true });
+      navigate("/login", { replace: true });
     }
   };
 

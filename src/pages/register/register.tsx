@@ -4,6 +4,7 @@ import styles from '../form.module.css';
 import { register } from '../../services/actions/auth-actions';
 import { useAppDispatch } from '../../hooks/redux-hooks';
 import { useForm } from '../../hooks/useForm';
+import { Link } from 'react-router-dom';
 
 
 const Register = () => {
@@ -47,7 +48,7 @@ const Register = () => {
           />
           <Button htmlType="submit">Зарегистрироваться</Button>
         </form>
-        <p className="text text_type_main-default text_color_inactive mt-20 mb-4">Уже зарегистрированы? <a href="/login" className={styles.link}>Войти</a></p>
+        <p className="text text_type_main-default text_color_inactive mt-20 mb-4">Уже зарегистрированы? <Link to="/login" className={styles.link}>Войти</Link></p>
       </div>
     </div>
   );
