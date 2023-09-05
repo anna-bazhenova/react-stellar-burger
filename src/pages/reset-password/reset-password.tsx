@@ -5,6 +5,7 @@ import { Navigate, useNavigate } from 'react-router';
 import { resetPassword } from '../../services/actions/auth-actions';
 import { useAppDispatch, useAppSelector } from '../../hooks/redux-hooks';
 import { useForm } from '../../hooks/useForm';
+import { Link } from 'react-router-dom';
 
 
 const ResetPassword = () => {
@@ -51,7 +52,7 @@ const ResetPassword = () => {
           />
           <Button htmlType="submit">Сохранить</Button>
         </form>
-        <p className="text text_type_main-default text_color_inactive mt-20 mb-4">Вспомнили пароль? <a href="/login" className={styles.link}>Войти</a></p>
+        <p className="text text_type_main-default text_color_inactive mt-20 mb-4">Вспомнили пароль? <Link to="/login" className={styles.link}>Войти</Link></p>
       </div>
     </div>
   );

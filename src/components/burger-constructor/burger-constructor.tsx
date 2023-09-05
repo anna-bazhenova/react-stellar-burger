@@ -41,7 +41,7 @@ const BurgerConstructor = () => {
       await dispatch(placeOrder(burgerIngredientIds()));
       openModal();
     } else {
-      navigate("login", { replace: true });
+      navigate("/login", { replace: true });
     }
   };
 
@@ -96,7 +96,7 @@ const BurgerConstructor = () => {
   );
 
   return (
-    <section ref={dropRef}>
+    <section ref={dropRef} data-cy="burger-constructor">
       <ul className={styles.burger_list}>
         <li className="ml-8">
           <ConstructorElement
@@ -143,6 +143,7 @@ const BurgerConstructor = () => {
           size="large"
           onClick={orderBurger}
           disabled={bun === null}
+          data-cy="place-order-button"
         >
           Оформить заказ
         </Button>

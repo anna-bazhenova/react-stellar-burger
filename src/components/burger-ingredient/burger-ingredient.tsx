@@ -35,7 +35,7 @@ const BurgerIngredient = ({ ingredient, onClick }: TBurgerIngredientProps) => {
 
   return (
     <>
-      <li className={styles.list_item} onClick={onClick} ref={dragRef}>
+      <li className={styles.list_item} onClick={onClick} ref={dragRef} data-cy="ingredient">
         <img className={styles.image} src={image} alt={name} />
         <div className={`${styles.container_price} mt-1 mb-1`}>
           <p className="text text_type_digits-default">{price}</p>

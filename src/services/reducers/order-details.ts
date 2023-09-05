@@ -10,7 +10,7 @@ type TOrderState = {
   orderId: number | null;
 };
 
-const initialState: TOrderState = {
+export const initialState: TOrderState = {
   orderId: null,
 };
 

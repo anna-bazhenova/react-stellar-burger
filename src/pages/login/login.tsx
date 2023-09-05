@@ -39,14 +39,16 @@ const Login = () => {
             isIcon={false}
             extraClass="mt-6"
             value={form.email}
+            data-cy="login-email"
           />
           <PasswordInput
             onChange={handleChange}
             name={'password'}
             extraClass="mb-6 mt-6"
             value={form.password}
+            data-cy="login-password"
           />
-          <Button htmlType="submit">Войти</Button>
+          <Button htmlType="submit" data-cy="login-button">Войти</Button>
         </form>
         <p className="text text_type_main-default text_color_inactive mt-20 mb-4">Вы — новый пользователь? <Link to="/register" className={styles.link}>Зарегистрироваться</Link></p>
         <p className="text text_type_main-default text_color_inactive m-0">Забыли пароль? <Link to="/forgot-password" className={styles.link}>Восстановить пароль</Link></p>

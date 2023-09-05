@@ -16,7 +16,7 @@ type TAuthState = {
   isPasswordResetPending: boolean;
 };
 
-const initialState: TAuthState = {
+export const initialState: TAuthState = {
   user: null,
   isAuthorized: false,
   isPasswordResetPending: false,

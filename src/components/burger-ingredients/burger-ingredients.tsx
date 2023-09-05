@@ -114,7 +114,7 @@ const BurgerIngredients = () => {
         <h2 id="buns" ref={bunsRef} className="text text_type_main-medium">
           Булки
         </h2>
-        <ul className={`${styles.list} pt-6 pl-4 pr-4`}>
+        <ul className={`${styles.list} pt-6 pl-4 pr-4`} data-cy="buns-section">
           {buns.map((bun) => (
             <BurgerIngredient
               key={bun._id}
@@ -146,7 +146,7 @@ const BurgerIngredients = () => {
         >
           Начинки
         </h2>
-        <ul className={`${styles.list} pt-6 pl-4 pr-4`}>
+        <ul className={`${styles.list} pt-6 pl-4 pr-4`} data-cy="mains-section">
           {mains.map((main) => (
             <BurgerIngredient
               key={main._id}
